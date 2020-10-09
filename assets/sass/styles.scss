@@ -1,0 +1,85 @@
+
+// 1. Import the initial variables
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+
+// Set your brand colors
+$primary: #3C4E56;
+$link: #0088FF;
+$info: #D855A8;
+$warning: #EFA821;
+$danger: #CE3E5D;
+$success: #18BF3F;
+
+//New colours
+$secure: #50B966;
+$medium: #B97116;
+$insecure: #B95852;
+
+//Add new color variables to the color map.
+@import "../../node_modules/bulma/sass/utilities/derived-variables";
+$addColors: (
+  "secure":($secure, findColorInvert($secure)),
+  "medium":($medium, findColorInvert($medium)),
+  "insecure":($insecure, findColorInvert($insecure)),
+);
+$colors: map-merge($colors, $addColors);
+
+
+/*
+####################################################
+B U L M A
+####################################################
+*/
+@import "../../node_modules/bulma/bulma.sass";
+
+/*
+####################################################
+U T I L I T Y
+####################################################
+*/
+
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.m-auto{
+  margin: auto;
+}
+
+.my-auto{
+  margin-top:auto;
+  margin-bottom: auto;
+}
+
+/*
+####################################################
+C U S T O M
+####################################################
+*/
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: 'Ubuntu', sans-serif;
+}
+ 
+#wrapper {
+   flex: 1;
+}
+
+.equal-height {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.equal-height .card-content {
+  flex: auto;
+}
+.justify-text{
+  text-align: justify;
+  text-justify: inter-word;
+}
