@@ -11084,4 +11084,8 @@ body {
   text-justify: inter-word;
 }
 
+.border3 {
+  border-radius: 3px;
+}
+
 /*# sourceMappingURL=styles.css.map */
