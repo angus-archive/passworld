@@ -12,6 +12,7 @@ include_once include_local_file("/includes/a_config.php");
   <!--Custom CSS-->
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
   </style> 
 </head>
 <body>
@@ -24,37 +25,61 @@ include_once include_local_file("/includes/a_config.php");
         <h1 class="title is-1">Generate a strong password</h1>
         <h3 class="subtitle">Use one of our randomly generated passwords</h3>
       </div>
-      <div class="columns is-centered is-mobile mt-5">
+
+      <!--Password Columns-->
+      <div class="columns is-vcentered is-centered is-mobile mt-5">
         <!--Generated password label -->
-        <div class="column is-6-desktop is-7-tablet is-6-mobile is-centered has-background-secure border3">
+        <div class="column is-9 is-centered has-background-secure border3">
           <div class="columns">
-            <div class="column is-9">
-              <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll;
-              " id="passwordView" class="is-size-4 has-text-light" style="font-family: 'Cousine', monospace;">aasjhd23413lsd</h4>
+            <div class="column is-10">
+              <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace;" id="passwordView" class="is-size-4 has-text-light">aasjhd23413lsd</h4>
             </div>
-            <div class="column is-3">
+            <div class="column is-2">
               <!--Level for buttons -->
-              <div class="level">
+              <div class="level is-mobile">
                 <div class="level-item">
                   <button class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
                 </div>
                 <div class="level-item">
-                  <button class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                  <button id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
                 </div>
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
 
-      <div class="columns is-centered mt-5">
-        <!--Slider box -->
-        <div class="column is-6-desktop is-7-tablet is-6-mobile is-centered has-background-light border3">
-          
+      <div class="columns is-centered is-mobile mt-5">
+        <!--Customise Section -->
+        <div style="font-family: 'Roboto Mono', monospace;" class="column is-9 is-centered has-background-light border3">
           <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
           <input id="lengthSlider" type="range" min="5" max="50" value="12" class="slider" style="width: 100%">
           <hr>
+          <!--Customise controls-->
+          <div class="level">
+            <!--Numbers-->
+            <div class="level-item">
+              <label class="checkContainer has-text-centered">Numbers
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <!--Letters-->
+            <div class="level-item">
+              <label class="checkContainer has-text-centered">Letters
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <!--Symbols-->
+            <div class="level-item">
+              <label class="checkContainer has-text-centered">Symbols
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+            </div>      
+          </div>
         </div>
       </div>
     </div>
@@ -102,6 +127,12 @@ include_once include_local_file("/includes/a_config.php");
        //Update
        var val = document.getElementById("lengthSlider").value
        update(val); 
+    });
+
+    $( "#refresh" ).click(function() {
+      //Update
+      var val = document.getElementById("lengthSlider").value
+      update(val); 
     });
 
 
