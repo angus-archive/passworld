@@ -21,12 +21,14 @@ include_once include_local_file("/includes/a_config.php");
   <!-- Content -->
   <div id="wrapper"  style="background-color: #D9DFE3">
     <div class="container section">
+
+      <!--Title and subtitle-->
       <div class="has-text-centered mb-5">
         <h1 class="title is-1">Generate a strong password</h1>
         <h3 class="subtitle">Use one of our randomly generated passwords</h3>
       </div>
 
-      <!--Password Columns-->
+      <!--Password View Section-->
       <div class="columns is-vcentered is-centered is-mobile mt-5">
         <!--Generated password label -->
         <div class="column is-9 is-centered has-background-secure border3">
@@ -50,38 +52,45 @@ include_once include_local_file("/includes/a_config.php");
         </div>
       </div>
 
+      <!--Password Config Section-->
       <div class="columns is-centered is-mobile mt-5">
         <!--Customise Section -->
         <div style="font-family: 'Roboto Mono', monospace;" class="column is-9 is-centered has-background-light border3">
           <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
-          <input id="lengthSlider" type="range" min="5" max="50" value="12" class="slider" style="width: 100%">
+          <div class="slidecontainer">
+            <input id="lengthSlider" type="range" min="5" max="50" value="12" class="slider" style="width: 100%">
+          </div>
           <hr>
           <!--Customise controls-->
-          <div class="level">
-            <!--Numbers-->
-            <div class="level-item">
-              <label class="checkContainer has-text-centered">Numbers
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
+          <fieldset id="passwordParameters">
+            <div class="level">
+              
+                <!--Numbers-->
+                <div class="level-item">
+                  <label class="checkContainer has-text-centered">Numbers
+                    <input id="numCheck" type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <!--Letters-->
+                <div class="level-item">
+                  <label class="checkContainer has-text-centered">Letters
+                    <input id="letCheck" type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <!--Symbols-->
+                <div class="level-item">
+                  <label class="checkContainer has-text-centered">Symbols
+                    <input id="symCheck" type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>     
             </div>
-            <!--Letters-->
-            <div class="level-item">
-              <label class="checkContainer has-text-centered">Letters
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
-            </div>
-            <!--Symbols-->
-            <div class="level-item">
-              <label class="checkContainer has-text-centered">Symbols
-                <input type="checkbox" checked="checked">
-                <span class="checkmark"></span>
-              </label>
-            </div>      
-          </div>
+          </fieldset>  
         </div>
       </div>
+
     </div>
   </div>
   <!-- Footer -->
@@ -94,13 +103,49 @@ include_once include_local_file("/includes/a_config.php");
      */
     function generate(length){
       var password="";
-      //All numbers and letters
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      //Setup an array for all letters and numbers etc
+      var all = ""
+      //Add the correct letters, numbers etc depending on check state
+      all+=(addSet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"));
+      all+=(addSet("0123456789","numCheck"));
+      all+=(addSet(";!£$&'#,?","symCheck"));
+      //Create the password
       for ( var i = 0; i < length; i++ ) {
-        password += possible.charAt(Math.floor(Math.random() * possible.length));
+        password += all.charAt(Math.floor(Math.random() * all.length));
       }
       return password;
     }
+
+    /*
+     * Function will add a data set to the all list given its widget ID
+     */
+    function addSet(chars,widgetID){
+      //Only add the set if the checkbox is checked
+      if($("#"+widgetID).is(':checked')){
+        return chars
+      }
+      return "";
+    }
+
+    /*
+     * Function when a checkbox is clicked
+     */
+    $('#passwordParameters .checkContainer input').change(function() {
+      //If it's currently disabled then simply enable it
+      if (this.checked){
+        $(this).prop("checked", true);
+      }
+      //Check at least 2 checkboxes are selected
+      else if ($('#passwordParameters .checkContainer input:checked').length >= 1){
+        //Disable the checkbox
+        $(this).prop("checked", false);
+      }else{
+        //Force this checkbox to be enabled
+        $(this).prop("checked", true);
+      }  
+    });
+
+
 
     /*
      * Will generate the complex password
@@ -122,17 +167,19 @@ include_once include_local_file("/includes/a_config.php");
       update(value);
     });
 
-    //First calls (when page loads)
-    $( document ).ready(function() {
-       //Update
-       var val = document.getElementById("lengthSlider").value
-       update(val); 
-    });
 
     $( "#refresh" ).click(function() {
-      //Update
+      //When the refresh button is clicked
       var val = document.getElementById("lengthSlider").value
       update(val); 
+    });
+
+
+    //JAVASCRIPT FIRST CALLS
+    $( document ).ready(function() {
+       //Get the slider value and then update the password
+       var val = document.getElementById("lengthSlider").value
+       update(val); 
     });
 
 
