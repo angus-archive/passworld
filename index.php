@@ -128,26 +128,6 @@ include_once include_local_file("/includes/a_config.php");
     }
 
     /*
-     * Function when a checkbox is clicked
-     */
-    $('#passwordParameters .checkContainer input').change(function() {
-      //If it's currently disabled then simply enable it
-      if (this.checked){
-        $(this).prop("checked", true);
-      }
-      //Check at least 2 checkboxes are selected
-      else if ($('#passwordParameters .checkContainer input:checked').length >= 1){
-        //Disable the checkbox
-        $(this).prop("checked", false);
-      }else{
-        //Force this checkbox to be enabled
-        $(this).prop("checked", true);
-      }  
-    });
-
-
-
-    /*
      * Will generate the complex password
      * as well as updating the correct labels
      */
@@ -159,6 +139,40 @@ include_once include_local_file("/includes/a_config.php");
       $("#lengthLabel").text(lengthContent);
     }
 
+    /*
+     * Function will get the current value
+     * of the slider and generate a password
+     */
+
+    function getSliderAndUpdate(){
+      var val = document.getElementById("lengthSlider").value
+      update(val);
+    }
+
+    /*
+     * Binding when a checkbox is clicked
+     */
+    $('#passwordParameters .checkContainer input').change(function() {
+      //If it's currently disabled then simply enable it
+      if (this.checked){
+        $(this).prop("checked", true);
+        //Regenerate when enabled again
+        getSliderAndUpdate();
+      }
+      //Check at least 2 checkboxes are selected
+      else if ($('#passwordParameters .checkContainer input:checked').length >= 1){
+        //Disable the checkbox
+        $(this).prop("checked", false);
+        //Regenerate when disabled
+        getSliderAndUpdate();
+
+      }else{
+        //Force this checkbox to be enabled
+        $(this).prop("checked", true);
+      }  
+    });
+
+
     //Whenever slider is moved
     $("#lengthSlider").on("input change", function() {
       //Get the slider value
@@ -168,18 +182,15 @@ include_once include_local_file("/includes/a_config.php");
     });
 
 
+
     $( "#refresh" ).click(function() {
-      //When the refresh button is clicked
-      var val = document.getElementById("lengthSlider").value
-      update(val); 
+      getSliderAndUpdate();
     });
 
 
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
-       //Get the slider value and then update the password
-       var val = document.getElementById("lengthSlider").value
-       update(val); 
+       getSliderAndUpdate(); 
     });
 
 
