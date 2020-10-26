@@ -56,11 +56,17 @@ include_once include_local_file("/includes/a_config.php");
       <div class="columns is-centered is-mobile mt-5">
         <!--Customise Section -->
         <div style="font-family: 'Roboto Mono', monospace;" class="column is-9 is-centered has-background-light border3">
+          <!--Strength section-->
+          <h4 id="strengthLabel" class="is-size-6 mb-1">Strength: 25</h4>
+          <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
+          <hr style="background-color: #E3E2E4">
+          <!--Length label-->
           <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
+          <!--Length Slider-->
           <div class="slidecontainer">
             <input id="lengthSlider" type="range" min="5" max="50" value="12" class="slider" style="width: 100%">
           </div>
-          <hr>
+          <br class="mt-4">
           <!--Customise controls-->
           <fieldset id="passwordParameters">
             <div class="level">
@@ -198,16 +204,26 @@ include_once include_local_file("/includes/a_config.php");
       allClasses=["secure","medium","insecure"]
       for (i = 0; i < allClasses.length; i++) {
         $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
+        $("#strengthLabel").removeClass("has-text-"+allClasses[i]);
       } 
       switch(passwordRank) {
         case 1:
           $("#securityIndicator").addClass("has-background-insecure");
+          //Update label and colour
+          $("#strengthLabel").text("Strength: Insecure");
+          $("#strengthLabel").addClass("has-text-insecure");
           break;
         case 2:
           $("#securityIndicator").addClass("has-background-medium");
+          //Update label and colour
+          $("#strengthLabel").text("Strength: Medium");
+          $("#strengthLabel").addClass("has-text-medium");
           break;
         default:
           $("#securityIndicator").addClass("has-background-secure");
+          //Update label and colour
+          $("#strengthLabel").text("Strength: Secure");
+          $("#strengthLabel").addClass("has-text-secure");
       } 
     }
 
