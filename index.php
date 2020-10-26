@@ -31,7 +31,7 @@ include_once include_local_file("/includes/a_config.php");
       <!--Password View Section-->
       <div class="columns is-vcentered is-centered is-mobile mt-5">
         <!--Generated password label -->
-        <div class="column is-9 is-centered has-background-secure border3">
+        <div id="securityIndicator" class="column is-9 is-centered has-background-secure border3">
           <div class="columns">
             <div class="column is-10">
               <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace;" id="passwordView" class="is-size-4 has-text-light">aasjhd23413lsd</h4>
@@ -135,10 +135,13 @@ include_once include_local_file("/includes/a_config.php");
      */
     function update(length){
       //Update the password label with a generated password
-      $("#passwordView").text(generate(length));
+      password=generate(length);
+      $("#passwordView").text(password);
       //Update the length label
       let lengthContent="Length: "+length;
       $("#lengthLabel").text(lengthContent);
+      //Update colours
+      updateColours(rankPassword(password))
     }
 
     /*
@@ -176,15 +179,36 @@ include_once include_local_file("/includes/a_config.php");
      */
 
     function rankPassword(password){
-      return 1
+      len=password.length
+      if (len < 9){
+        return 1
+      }else if(len < 14){
+        return 2
+      }
+      return 3
     }
 
     /*
      * Will update the ui based on the generated passwords
      * rank
      */
+
     function updateColours(passwordRank){
-      return 1
+      //Remove all classes
+      allClasses=["secure","medium","insecure"]
+      for (i = 0; i < allClasses.length; i++) {
+        $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
+      } 
+      switch(passwordRank) {
+        case 1:
+          $("#securityIndicator").addClass("has-background-insecure");
+          break;
+        case 2:
+          $("#securityIndicator").addClass("has-background-medium");
+          break;
+        default:
+          $("#securityIndicator").addClass("has-background-secure");
+      } 
     }
 
     /* =================== B I N D I N G S ====================
