@@ -40,10 +40,10 @@ include_once include_local_file("/includes/a_config.php");
               <!--Level for buttons -->
               <div class="level is-mobile">
                 <div class="level-item">
-                  <button class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
+                  <button data-tooltip="Copy to Clipboard" onclick="copyToClipboard()" class="button has-tooltip-right"><span class="icon"><i class="far fa-copy"></i></span></button>
                 </div>
                 <div class="level-item">
-                  <button id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                  <button data-tooltip="Regenerate password" id="refresh" class="button has-tooltip-right"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
                 </div>
               </div>
             </div>
@@ -98,6 +98,8 @@ include_once include_local_file("/includes/a_config.php");
   <!--Scripts-->
   <script type="text/javascript">
     
+    /* =================== F U N C T I O N S ====================
+
     /*
      * Will generate the complex password
      */
@@ -108,7 +110,7 @@ include_once include_local_file("/includes/a_config.php");
       //Add the correct letters, numbers etc depending on check state
       all+=(addSet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"));
       all+=(addSet("0123456789","numCheck"));
-      all+=(addSet(";!£$&'#,?","symCheck"));
+      all+=(addSet(";!£$&'#,?{}[]()+=*<>~","symCheck"));
       //Create the password
       for ( var i = 0; i < length; i++ ) {
         password += all.charAt(Math.floor(Math.random() * all.length));
@@ -148,6 +150,24 @@ include_once include_local_file("/includes/a_config.php");
       var val = document.getElementById("lengthSlider").value
       update(val);
     }
+
+    /*
+     * Function will copy password to clipboard
+     */
+
+    function copyToClipboard(){
+      //Get the password label element
+      var copyText = document.getElementById("passwordView");
+      //Select the text
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      //Copy
+      document.execCommand("copy");
+      //Alert
+      alert("Copied password");
+    }
+
+    /* =================== B I N D I N G S ====================
 
     /*
      * Binding when a checkbox is clicked
