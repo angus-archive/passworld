@@ -157,14 +157,34 @@ include_once include_local_file("/includes/a_config.php");
 
     function copyToClipboard(){
       //Get the password label element
-      var copyText = document.getElementById("passwordView");
-      //Select the text
-      copyText.select();
-      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-      //Copy
+      element=("#passwordView")
+      //Copy to clipboard using temp input field
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
       document.execCommand("copy");
+      $temp.remove();
+
       //Alert
       alert("Copied password");
+    }
+
+
+    /*
+     * Function will rank a generated password
+     * returns 1, 2 or 3 (3 being best)
+     */
+
+    function rankPassword(password){
+      return 1
+    }
+
+    /*
+     * Will update the ui based on the generated passwords
+     * rank
+     */
+    function updateColours(passwordRank){
+      return 1
     }
 
     /* =================== B I N D I N G S ====================
