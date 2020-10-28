@@ -64,7 +64,7 @@ include_once include_local_file("/includes/a_config.php");
           <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
           <!--Length Slider-->
           <div class="slidecontainer">
-            <input id="lengthSlider" type="range" min="5" max="50" value="12" class="slider" style="width: 100%">
+            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" style="width: 100%">
           </div>
           <br class="mt-4">
           <!--Customise controls-->
@@ -121,6 +121,8 @@ include_once include_local_file("/includes/a_config.php");
       for ( var i = 0; i < length; i++ ) {
         password += all.charAt(Math.floor(Math.random() * all.length));
       }
+      //Estimate time
+      $("#crackTimeLabel").text("Time to crack: "+convertTime(estimateTime(all.length,length)));
       return password;
     }
 
@@ -160,9 +162,7 @@ include_once include_local_file("/includes/a_config.php");
       update(val);
     }
 
-    /*
-     * Function will copy password to clipboard
-     */
+    /* Function will copy password to clipboard*/
 
     function copyToClipboard(){
       //Get the password label element
@@ -186,13 +186,57 @@ include_once include_local_file("/includes/a_config.php");
 
     function rankPassword(password){
       len=password.length
-      if (len < 9){
+      if (len < 6){
         return 1
-      }else if(len < 14){
+      }else if(len < 10){
         return 2
       }
       return 3
     }
+
+    /*
+     * Will return in seconds the amount of time
+     * to crack password
+     */
+    function estimateTime(setLength,passwordLength){
+      //Super computers
+      return 0.5*Math.pow(setLength,passwordLength) * 1.21e-11;
+      //Standard computers
+      //return 0.5*Math.pow(setLength,passwordLength) * 1.764e-8;
+    }
+
+    /*
+     * Will convert time in seconds to a more 
+     * readable format
+     */
+    function convertTime(time){
+      //Array to convert time to a string value
+      var data=[["Seconds",60],["Minutes",3600],["Hours",86400],["Days",3.154e7],["Years",3.154e8],["Decades",3.154e9],["Centurys",3.154e10],["Milleniums",3.154e11]];
+      //Setup response
+      response="???"
+      if (time < 1){
+        response="Less than a second"
+      }else{
+        //Loop through time stamps
+        for (var i =0; i < data.length;i++){
+          item=data[i]
+          //If the generated time is less than the current timestamp
+          if (time < item[1]){
+            var divisor = 1
+            if (i > 0){
+              divisor=data[i-1][1];
+            }
+            //Divide the generate time by the divisor and create a string
+            response = Math.round(time/divisor)+" "+item[0];
+            break;
+          }
+          response="Over 1 Million Years"
+            
+        }
+      }
+      return response;
+    }
+
 
     /*
      * Will update the ui based on the generated passwords
