@@ -13,6 +13,7 @@ include_once include_local_file("/includes/a_config.php");
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
   </style> 
 </head>
 <body>
@@ -40,7 +41,7 @@ include_once include_local_file("/includes/a_config.php");
               <!--Level for buttons -->
               <div class="level is-mobile">
                 <div class="level-item">
-                  <button data-tooltip="Copy to Clipboard" onclick="copyToClipboard()" class="button has-tooltip-right"><span class="icon"><i class="far fa-copy"></i></span></button>
+                  <button id="copyButton" data-tooltip="Copy to Clipboard" class="button has-tooltip-right"><span class="icon"><i class="far fa-copy"></i></span></button>
                 </div>
                 <div class="level-item">
                   <button data-tooltip="Regenerate password" id="refresh" class="button has-tooltip-right"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
@@ -121,8 +122,6 @@ include_once include_local_file("/includes/a_config.php");
       for ( var i = 0; i < length; i++ ) {
         password += all.charAt(Math.floor(Math.random() * all.length));
       }
-      //Estimate time
-      $("#crackTimeLabel").text("Time to crack: "+convertTime(estimateTime(all.length,length)));
       return password;
     }
 
@@ -148,8 +147,11 @@ include_once include_local_file("/includes/a_config.php");
       //Update the length label
       let lengthContent="Length: "+length;
       $("#lengthLabel").text(lengthContent);
+      //Estimate time
+      var timeToCrack = estimateTime(password)
+      $("#crackTimeLabel").text("Time to crack: "+convertTime(timeToCrack));
       //Update colours
-      updateColours(rankPassword(password))
+      updateColours(rankPassword(timeToCrack));
     }
 
     /*
@@ -162,47 +164,56 @@ include_once include_local_file("/includes/a_config.php");
       update(val);
     }
 
-    /* Function will copy password to clipboard*/
-
-    function copyToClipboard(){
-      //Get the password label element
-      element=("#passwordView")
-      //Copy to clipboard using temp input field
-      var $temp = $("<input>");
-      $("body").append($temp);
-      $temp.val($(element).text()).select();
-      document.execCommand("copy");
-      $temp.remove();
-
-      //Alert
-      alert("Copied password");
-    }
-
+    
 
     /*
      * Function will rank a generated password
      * returns 1, 2 or 3 (3 being best)
      */
 
-    function rankPassword(password){
-      len=password.length
-      if (len < 6){
+    function rankPassword(timeToCrack){
+      //If password can be cracked in less than an hour
+      if (timeToCrack < 3600){
         return 1
-      }else if(len < 10){
+      //If can be cracked in under a year
+      }else if(timeToCrack < 3.154e7){
         return 2
       }
+      //Takes over a year to crack
       return 3
     }
 
     /*
-     * Will return in seconds the amount of time
-     * to crack password
+     * Estimate the amount of time to crack this password
      */
-    function estimateTime(setLength,passwordLength){
-      //Super computers
-      return 0.5*Math.pow(setLength,passwordLength) * 1.21e-11;
-      //Standard computers
-      //return 0.5*Math.pow(setLength,passwordLength) * 1.764e-8;
+    function estimateTime(password){;
+      //Regular expressions
+      let numbersExpression = /\d/ ;
+      let lowerExpression = /[a-z]/;
+      let upperExpression = /[A-Z]/;
+      let symbolsExpression = /[\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\>\=\?\@\[\]\{\}\\\\\^\_\`\~]/;
+      //Create a dictionary
+      var regexDict=[[numbersExpression,9],[lowerExpression,26],[upperExpression,26],[symbolsExpression,30]]
+
+      //Calculate the set length
+      var setLength = 0;
+      for(var i=0; i < regexDict.length; i++) {
+        key=regexDict[i][0];
+        value=regexDict[i][1];
+        //Get the value (current set length)
+        if ((password.match(key))){
+          setLength+=value;
+        }
+      }
+
+      //Store constants
+      averagePC = 1.21e-7
+      superComputer = 1.21e-11;
+
+      //Return
+      return 0.5*Math.pow(setLength,password.length) * superComputer; 
+
+
     }
 
     /*
@@ -272,6 +283,18 @@ include_once include_local_file("/includes/a_config.php");
     }
 
     /* =================== B I N D I N G S ====================
+  
+    /* Function will copy password to clipboard*/
+    $( "#copyButton" ).click(function() {
+      //Get the password label element
+      element=("#passwordView")
+      //Copy to clipboard using temp input field
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+    });
 
     /*
      * Binding when a checkbox is clicked
