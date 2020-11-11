@@ -105,35 +105,64 @@ include_once include_local_file("/includes/a_config.php");
   <!--Scripts-->
   <script type="text/javascript">
     
-    /* =================== F U N C T I O N S ====================
+    /* =================== F U N C T I O N S ==================== */
 
     /*
      * Will generate the complex password
      */
     function generate(length){
       var password="";
-      //Setup an array for all letters and numbers etc
-      var all = ""
-      //Add the correct letters, numbers etc depending on check state
-      all+=(addSet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"));
-      all+=(addSet("0123456789","numCheck"));
-      all+=(addSet(";!£$&'#,?{}[]()+=*<>~","symCheck"));
-      //Create the password
-      for ( var i = 0; i < length; i++ ) {
-        password += all.charAt(Math.floor(Math.random() * all.length));
+
+      //Set of parameters to use
+      masterSet=[]
+      allSet=[["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"],
+        ["0123456789","numCheck"],[";!£$&'#,?{}[]()+=*<>~","symCheck"]]
+      //Filter into master set (only add characters based on checkboxes)
+      for (var i = 0; i < allSet.length; i++) {
+        if (checkSet(allSet[i][1])){
+          masterSet.push(allSet[i])
+        }
       }
-      return password;
+      //Create a master string to pick randomly from
+      masterString=createSet(masterSet,length).split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
+      return masterString
     }
 
     /*
-     * Function will add a data set to the all list given its widget ID
+     * Function will all the characters for the password in an equal amount      
      */
-    function addSet(chars,widgetID){
+    function createSet(paramList,length){
+      var masterString = "";
+      let numberOfParams = paramList.length;
+      //Calculate set size for each param
+      let setSize = Math.floor(length/numberOfParams);  
+      let finalSetSize = length-((numberOfParams-1)*setSize);
+      //Go through each parameter
+      for (var i = 0; i < numberOfParams; i++) {
+        var currentSet = paramList[i]
+        //Calculate amount of chars to use
+        numberOfChars=setSize;
+        if (i < numberOfParams-1){
+          numberOfChars=finalSetSize;
+        }
+        //Randomly pick this amount of chars and add it to masterString
+        for (var j = 0; j < numberOfChars; j++) {
+          masterString += currentSet[0].charAt(Math.floor(Math.random() * currentSet[0].length))
+        }
+        
+      } 
+      return masterString;       
+    }
+
+    /*
+     * Function will check if user wants to use this parameters set
+     */
+    function checkSet(widgetID){
       //Only add the set if the checkbox is checked
       if($("#"+widgetID).is(':checked')){
-        return chars
+        return true;
       }
-      return "";
+      return false;
     }
 
     /*
