@@ -32,7 +32,7 @@ include_once include_local_file("/includes/a_config.php");
       <!--Password Generator Columns-->
       <div class="columns is-multiline is-centered is-tablet mt-5">
         <!--Generated password label (GREEN) -->
-        <div id="securityIndicator" class="column is-12 is-centered has-background-secure border3">
+        <div id="securityIndicator" class="column is-12-tablet is-10-desktop is-centered has-background-secure border3">
           <div class="columns">
             <div class="column is-10">
               <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace;" id="passwordView" class="is-size-4 has-text-light">aasjhd23413lsd</h4>
@@ -51,7 +51,7 @@ include_once include_local_file("/includes/a_config.php");
           </div>
         </div>
         <!--Customise Section (WHITE)-->
-        <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12 is-centered has-background-light border3">
+        <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3">
           <!--Strength section-->
           <h4 id="strengthLabel" class="is-size-6 mb-1">Strength: 25</h4>
           <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
