@@ -41,10 +41,10 @@ include_once include_local_file("/includes/a_config.php");
               <!--Level for buttons -->
               <div class="level is-mobile">
                 <div class="level-item">
-                  <button id="copyButton" data-tooltip="Copy to Clipboard" class="button has-tooltip-right"><span class="icon"><i class="far fa-copy"></i></span></button>
+                  <button id="copyButton" class="button has-tooltip-right"><span class="icon"><i class="far fa-copy"></i></span></button>
                 </div>
                 <div class="level-item">
-                  <button data-tooltip="Regenerate password" id="refresh" class="button has-tooltip-right"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                  <button id="refresh" class="button has-tooltip-right"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
                 </div>
               </div>
             </div>
