@@ -8,6 +8,6 @@
 <title><?php print $PAGE_TITLE;?></title>
 <!--Meta information-->
 <meta name="description" content="<?php print $PAGE_DESCRIPTION;?>">
-<meta name="keywords" content="example,tags,go,here,rocket,php">
+<meta name="keywords" content="password,cyber,security,passworld">
 <?php include_once "static-tags.php" ?>
 

@@ -27,19 +27,7 @@ include_once include_local_file("/includes/a_config.php");
         </div>
       </div>
     </section>
-    <div class="container section">
-      <div class="has-text-centered">
-        <h3 class="title is-4">Button colours</h3>
-        <div class="buttons">
-          <button class="button is-primary">Primary</button>
-            <button class="button is-link">Link</button>
-          <button class="button is-info">Info</button>
-          <button class="button is-success">Success</button>
-          <button class="button is-warning">Warning</button>
-          <button class="button is-danger">Danger</button>
-        </div>
-      </div>
-    </div>
+
   </div>
   <!-- Footer -->
   <? include_once include_local_file("/includes/footer.php");?>
