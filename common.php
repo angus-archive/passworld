@@ -57,9 +57,11 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
+      console.log("Load more clicked")
       $.post("/helpers/loadMore", {"offset":offset})
         .done(function( data ) {
           if(data){
+            console.log("Valid return");
             data=JSON.parse(data);
             //Add data here
             for (var i = 0; i < data.length; i++) {
@@ -73,12 +75,14 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                   <p><b>${counterContent}</b>&nbsp</p>
                   <p>${passwordContent}</p>
               </div>`
-              
+
               $("#moreBlock").append(col);
 
             }
             //Increase offset
             offset+=25;
+          }else{
+            console.log("Invalid data returned")
           }
         });
     });
