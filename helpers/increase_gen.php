@@ -5,6 +5,7 @@
  * 16/11/20
  */
 
+header('Content-type: application/json');
 //Import the global functions
 include_once dirname($_SERVER["DOCUMENT_ROOT"])."/core/global-functions.php";
 //Load the database
