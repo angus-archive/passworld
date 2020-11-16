@@ -50,6 +50,10 @@ function isCurrentSR($pageName){
       <a class="navbar-item" href="/">
         Generate
       </a>
+      <!--View common passwords-->
+      <a class="navbar-item" href="/common">
+        Common Passwords
+      </a>
       <!--About page-->
       <a class="navbar-item" href="/about">
         About
