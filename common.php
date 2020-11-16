@@ -62,6 +62,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         .done(function( data ) {
           if(data){
             console.log("Valid return");
+            console.log(data);
             data=JSON.parse(data);
             //Add data here
             for (var i = 0; i < data.length; i++) {
