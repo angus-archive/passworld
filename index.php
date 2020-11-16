@@ -133,7 +133,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
       addOneToGenCounter();
     }
-    
+
     //Function will format a number with thousands seperator
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -149,6 +149,18 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         }
       }});
     }
+
+    //Function will update the number of copied passwords
+    function addOneToCopyCounter(){
+      //Ajax function will update total on server and return result
+      $.ajax({url: "/helpers/increase_copy.php", success: function(result){
+        if (Number.isInteger(parseInt(result))){
+          //Update the label
+          $("#copiedStat").text(numberWithCommas(result))
+        }
+      }});
+    }
+
 
     /* =================== B I N D I N G S ==================== */
 
@@ -168,6 +180,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       $temp.val($(element).text()).select();
       document.execCommand("copy");
       $temp.remove();
+      //Increase counter
+      addOneToCopyCounter();
     });
 
     /*
