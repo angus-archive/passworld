@@ -17,4 +17,3 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
 //Increase and then return total
 increase_stat_by_one($pdo,"generated");
-echo get_stat_value($pdo,"generated");
