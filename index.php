@@ -142,23 +142,24 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     //Function will update the number of generated passwords
     function addOneToGenCounter(){
       //Ajax function will update total on server and return result
-      $.ajax({url: "/helpers/increase_gen.php", success: function(result){
-        if (Number.isInteger(parseInt(result))){
-          //Update the label
-          $("#genStat").text(numberWithCommas(result))
-        }
-      }});
+      $.post("/helpers/increase_gen.php", function(result, status){
+          if (Number.isInteger(parseInt(result))){
+            //Update the label
+            $("#genStat").text(numberWithCommas(result))
+          }
+      });
     }
 
     //Function will update the number of copied passwords
     function addOneToCopyCounter(){
       //Ajax function will update total on server and return result
-      $.ajax({url: "/helpers/increase_copy.php", success: function(result){
-        if (Number.isInteger(parseInt(result))){
-          //Update the label
-          $("#copiedStat").text(numberWithCommas(result))
-        }
-      }});
+      $.post("/helpers/increase_copy.php", function(result, status){
+          if (Number.isInteger(parseInt(result))){
+            //Update the label
+            $("#copiedStat").text(numberWithCommas(result))
+          }
+      });
+
     }
 
 
