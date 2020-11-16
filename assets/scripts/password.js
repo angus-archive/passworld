@@ -82,17 +82,6 @@ function update(length){
   updateColours(rankPassword(timeToCrack));
 }
 
-/*
- * Function will get the current value
- * of the slider and generate a password
- */
-
-function getSliderAndUpdate(){
-  var val = document.getElementById("lengthSlider").value
-  update(val);
-}
-
-
 
 /*
  * Function will rank a generated password

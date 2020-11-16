@@ -64,7 +64,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
           <!--Length Slider-->
           <div class="slidecontainer">
-            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" style="width: 100%">
+            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" onmouseup="sliderUp()" ontouchend="sliderUp()" style="width: 100%">
           </div>
           <br class="mt-4">
           <!--Customise controls-->
@@ -101,13 +101,13 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Passwords Generated</p>
-                <p class="title"><?php echo number_format(get_sum_generated($pdo));?></p>
+                <p id="genStat"class="title"><?php echo number_format(get_stat_value($pdo,"generated"));?></p>
               </div>
             </div>
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Passwords Copied</p>
-                <p class="title"><?php echo number_format(get_sum_copied($pdo));?></p>
+                <p id="copiedStat" class="title"><?php echo number_format(get_stat_value($pdo,"copied"));?></p>
               </div>
             </div>
           </div>
@@ -123,8 +123,41 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <script type="text/javascript">
     
 
-    /* =================== B I N D I N G S ====================
-  
+    /*
+     * Function will get the current value
+     * of the slider and generate a password
+     */
+
+    function getSliderAndUpdate(){
+      var val = document.getElementById("lengthSlider").value
+      update(val);
+      addOneToGenCounter();
+    }
+    
+    //Function will format a number with thousands seperator
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    //Function will update the number of generated passwords
+    function addOneToGenCounter(){
+      //Ajax function will update total on server and return result
+      $.ajax({url: "/helpers/increase_gen.php", success: function(result){
+        if (Number.isInteger(parseInt(result))){
+          //Update the label
+          $("#genStat").text(numberWithCommas(result))
+        }
+      }});
+    }
+
+    /* =================== B I N D I N G S ==================== */
+
+    //Will be called when user releases slider
+    function sliderUp(){
+      //Increase running total by one 
+      addOneToGenCounter();
+    }
+    
     /* Function will copy password to clipboard*/
     $( "#copyButton" ).click(function() {
       //Get the password label element
