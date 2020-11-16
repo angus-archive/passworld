@@ -95,23 +95,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             </div>
           </fieldset>  
         </div>
-        <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3">
-          <!--Level for stats-->
-          <div class="level">
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">Passwords Generated</p>
-                <p id="genStat"class="title"><?php echo number_format(get_stat_value($pdo,"generated"));?></p>
-              </div>
-            </div>
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">Passwords Copied</p>
-                <p id="copiedStat" class="title"><?php echo number_format(get_stat_value($pdo,"copied"));?></p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -143,10 +126,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     function addOneToGenCounter(){
       //Ajax function will update total on server and return result
       $.post("/helpers/increase_gen.php", function(result, status){
-          if (Number.isInteger(parseInt(result))){
-            //Update the label
-            $("#genStat").text(numberWithCommas(result))
-          }
       });
     }
 
@@ -154,10 +133,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     function addOneToCopyCounter(){
       //Ajax function will update total on server and return result
       $.post("/helpers/increase_copy.php", function(result, status){
-          if (Number.isInteger(parseInt(result))){
-            //Update the label
-            $("#copiedStat").text(numberWithCommas(result))
-          }
       });
 
     }
