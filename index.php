@@ -114,35 +114,10 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     function getSliderAndUpdate(){
       var val = document.getElementById("lengthSlider").value
       update(val);
-      addOneToGenCounter();
     }
-
-    //Function will format a number with thousands seperator
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    //Function will update the number of generated passwords
-    function addOneToGenCounter(){
-      //Ajax function will update total on server and return result
-      $.post("/helpers/increase_gen.php");
-    }
-
-    //Function will update the number of copied passwords
-    function addOneToCopyCounter(){
-      //Ajax function will update total on server and return result
-      $.post("/helpers/increase_copy.php");
-
-    }
-
 
     /* =================== B I N D I N G S ==================== */
 
-    //Will be called when user releases slider
-    function sliderUp(){
-      //Increase running total by one 
-      addOneToGenCounter();
-    }
     
     /* Function will copy password to clipboard*/
     $( "#copyButton" ).click(function() {
@@ -154,8 +129,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       $temp.val($(element).text()).select();
       document.execCommand("copy");
       $temp.remove();
-      //Increase counter
-      addOneToCopyCounter();
     });
 
     /*
