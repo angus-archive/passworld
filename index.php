@@ -125,15 +125,13 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     //Function will update the number of generated passwords
     function addOneToGenCounter(){
       //Ajax function will update total on server and return result
-      $.post("/helpers/increase_gen.php", function(result, status){
-      });
+      $.post("/helpers/increase_gen.php");
     }
 
     //Function will update the number of copied passwords
     function addOneToCopyCounter(){
       //Ajax function will update total on server and return result
-      $.post("/helpers/increase_copy.php", function(result, status){
-      });
+      $.post("/helpers/increase_copy.php");
 
     }
 
