@@ -57,7 +57,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
-      console.log("Load more clicked")
+      console.log("Load more clicked offset: "+offset)
       $.post("/helpers/loadMore", {"offset":offset})
         .done(function( data ) {
           if(data){
