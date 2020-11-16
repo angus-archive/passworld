@@ -24,7 +24,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <!-- Navbar -->
   <? include_once include_local_file("/includes/navbar.php");?>
   <!-- Content -->
-  <div id="wrapper"  style="background-color: #D9DFE3">
+  <div id="wrapper" class="has-background-background">
     <div class="container section">
 
       <!--Title and subtitle-->

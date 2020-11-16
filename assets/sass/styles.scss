@@ -13,6 +13,7 @@ $success: #18BF3F;
 
 //New colours
 $bluey: #00A08A;
+$background: #D9DFE3;
 $secure: #50B966;
 $medium: #E49E0F;
 $insecure: #B95852;
@@ -24,7 +25,7 @@ $addColors: (
   "medium":($medium, findColorInvert($medium)),
   "insecure":($insecure, findColorInvert($insecure)),
   "bluey":($bluey,findColorInvert($bluey)),
-
+  "background":($background,findColorInvert($background)),
 );
 $colors: map-merge($colors, $addColors);
 
