@@ -40,7 +40,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             </div>
             <? endforeach; ?>
           </div>
-          <div class="panel-block">
+          <div class="panel-block" id="buttonBlock">
             <button id="loadMore" class="button is-link is-outlined is-fullwidth">
               Load More..
             </button>
@@ -57,13 +57,14 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
-      console.log("Load more clicked offset: "+offset)
       $.post("/helpers/loadMore", {"offset":offset})
         .done(function( data ) {
           if(data){
-            console.log("Valid return");
-            console.log(data);
             data=JSON.parse(data);
+            //If array is empty (end of list) remove load more button
+            if (data.length < 1){
+              $( "#buttonBlock" ).remove();
+            }
             //Add data here
             for (var i = 0; i < data.length; i++) {
               //Collect password info
@@ -80,8 +81,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
               $("#moreBlock").append(col);
 
             }
-            //Increase offset
-            offset+=25;
+            //Increase offset (limit and offset defined here)
+            offset+=limitValue;
           }else{
             console.log("Invalid data returned")
           }
@@ -90,7 +91,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
-       offset=25; 
+      limitValue=25 //Defines the offset limits
+      offset=limitValue; //Defines starting offset
     });
   </script>
 </body>
