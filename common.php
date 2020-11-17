@@ -35,8 +35,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             <?foreach(get_common_passwords($pdo) as $password):?>
             <? $counter+=1 ?>
             <div class="panel-block">
-                <p><b><?=$counter?>:</b>&nbsp</p>
-                <p><?=$password["password"]?></p>
+                <h6 class="subtitle is-6"><b><?=$counter?>:</b>&nbsp
+                <?=$password["password"]?></h6>
             </div>
             <? endforeach; ?>
           </div>
@@ -74,8 +74,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
               var passwordContent=resourceInfo["password"]
               //Insert into HTML
               var col = `<div class="panel-block">
-                  <p><b>${counterContent}</b>&nbsp</p>
-                  <p>${passwordContent}</p>
+                  <h6 class="subtitle is-6"><b>${counterContent}:</b>&nbsp
+                  ${passwordContent}</h6>
               </div>`
 
               $("#moreBlock").append(col);
