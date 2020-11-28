@@ -11688,6 +11688,10 @@ body {
   border-radius: 3px;
 }
 
+.navbar-item .activeNavLink {
+  color: #00A08A;
+}
+
 /*
 ####################################################
 C H E C K   B O X

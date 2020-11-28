@@ -41,8 +41,8 @@ if ($file_base != "index.php"){
 }
 $PAGE_CANONICAL=$can_header.$_SERVER['SERVER_NAME'].$withoutExt;
 
-//Switch statement for pages
-switch ($first_parent) {
+
+switch ($full_path) {
 
 	//Home page
 	case '/index.php':
@@ -59,6 +59,15 @@ switch ($first_parent) {
 		$PAGE_TITLE="About | Passworld";
 		$PAGE_DESCRIPTION="Find out about Passworld";
 		break;
+
+	//Common Page
+	case '/common.php':
+		$NAV_PAGE="common";
+		$CURRENT_PAGE="common";
+		$PAGE_TITLE="Common Passwords | Passworld";
+		$PAGE_DESCRIPTION="View a list of the most commonly used passwords in the world";
+		break;
+
 
 	//If undefined
 	default:

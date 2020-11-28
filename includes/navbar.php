@@ -31,7 +31,7 @@ function isCurrentSR($pageName){
 
 
 ?>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <img src="/assets/images/core/logo.svg" width="112" height="28">
@@ -47,15 +47,15 @@ function isCurrentSR($pageName){
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <!--Generate password-->
-      <a class="navbar-item" href="/">
+      <a class="navbar-item <?isCurrent("index")?>" href="/">
         Generate
       </a>
       <!--View common passwords-->
-      <a class="navbar-item" href="/common">
+      <a class="navbar-item <?isCurrent("common")?>" href="/common">
         Common Passwords
       </a>
       <!--About page-->
-      <a class="navbar-item" href="/about">
+      <a class="navbar-item <?isCurrent("about")?>" href="/about">
         About
       </a>
     </div>

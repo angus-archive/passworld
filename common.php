@@ -32,7 +32,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           <!--View passwords-->
           <div id="moreBlock">
             <? $counter=0 ?>
-            <?foreach(get_common_passwords($pdo) as $password):?>
+            <?foreach(get_common_passwords($pdo,0,50) as $password):?>
             <? $counter+=1 ?>
             <div class="panel-block">
                 <h6 class="subtitle is-6"><b><?=$counter?>:</b>&nbsp
@@ -57,7 +57,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
-      $.post("/helpers/loadMore", {"offset":offset})
+      $.post("/helpers/loadMore", {"offset":offset,"limit":limitValue})
         .done(function( data ) {
           if(data){
             data=JSON.parse(data);
@@ -83,6 +83,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             }
             //Increase offset (limit and offset defined here)
             offset+=limitValue;
+
           }else{
             console.log("Invalid data returned")
           }
@@ -91,7 +92,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
-      limitValue=25 //Defines the offset limits
+      limitValue=50 //Defines the number of results loaded
       offset=limitValue; //Defines starting offset
     });
   </script>
