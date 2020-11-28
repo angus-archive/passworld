@@ -14,5 +14,6 @@
 <link rel="apple-touch-icon" href="/assets/images/core/apple-touch-icon.png">
 <!-- Custom CSS -->
 <link href="/assets/styles/styles.css" rel="stylesheet">
+<link href="/assets/styles/custom.css" rel="stylesheet">
 <!--Font Awesome -->
 <script src="https://kit.fontawesome.com/a42d5e52b3.js" crossorigin="anonymous"></script>

@@ -37,14 +37,14 @@ function isCurrentSR($pageName){
       <img src="/assets/images/core/logo.svg" width="112" height="28">
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="passNav">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="passNav" class="navbar-menu">
     <div class="navbar-start">
       <!--Generate password-->
       <a class="navbar-item <?isCurrent("index")?>" href="/">

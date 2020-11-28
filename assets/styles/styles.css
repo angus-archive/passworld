@@ -11808,4 +11808,17 @@ S L I D E R
   cursor: pointer;
 }
 
+/*
+####################################################
+N A V
+####################################################
+*/
+.navbar-start {
+  transition: 0.3s;
+}
+
+.navbar-start a:hover {
+  color: #50B966 !important;
+}
+
 /*# sourceMappingURL=styles.css.map */
