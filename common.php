@@ -69,33 +69,35 @@ $initialOffset=50;
   <script type="text/javascript">
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
-      //List of all the common passwords
-      var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
-      var offset=parseInt(<?php echo $initialOffset ?>);
-      var passwordLimit = 50;
+      
     });
-    /* =================== S E A R C H ==================== */
+    //Setup initial variables
+    var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
+    var offset=parseInt(<?php echo $initialOffset ?>);
+    var passwordLimit = 50;
 
     //setup before functions
     var typingTimer;                //timer identifier
     var doneTypingInterval = 500;  //time in ms, 5 second for example
     var $input = $('#searchBar');
 
-    //When user starts typing in search bar
-    $input.on('keyup', function () {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(doneTyping, doneTypingInterval);
-    });
 
-    //on keydown, clear the countdown 
-    $input.on('keydown', function () {
-      clearTimeout(typingTimer);
-    });
+    /* =================== F U N C T I O N S ==================== */
+
+    //Will return a sub list with matches
+    function search(data,query){
+
+    }
 
     //When user is finished typing in search
     function doneTyping () {
       query=$('#searchBar').val();
       console.log("Searching for "+query);
+      //Hide all data
+      $("#moreBlock").empty();
+      //Hide load more 
+      $("#loadMore").hide()
+      //Search for data
       
     }
 
@@ -121,12 +123,31 @@ $initialOffset=50;
       }
     }
 
+
+    /* =================== B I N D I N G S ==================== */
+
+
+    //When user starts typing in search bar
+    $input.on('keyup', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    //on keydown, clear the countdown 
+    $input.on('keydown', function () {
+      clearTimeout(typingTimer);
+    });
+
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
       //Take array slice
       addCommonPasswords(commonPasswords.slice(offset,offset+passwordLimit));
       //Increase offset (limit and offset defined here)
       offset+=passwordLimit;
+      //Check to see if offset is larger than list
+      if (offset >= commonPasswords.length){
+        $("#loadMore").hide();
+      }
     });
 
     
