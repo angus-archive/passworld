@@ -42,7 +42,7 @@ $all_passwords=get_all_common_passwords($pdo);
               </span>
             </p>
             <p class="control">
-              <button id="clearButton" class="button is-danger">Clear</button>
+              <button id="clearButton" class="button is-danger" style="display: none">Clear</button>
             </p>
           </div>
           <!--Number of results-->
@@ -75,7 +75,7 @@ $all_passwords=get_all_common_passwords($pdo);
   <script type="text/javascript">
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
-      $("#clearButton").hide();
+      
     });
     //Setup initial variables
     var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
