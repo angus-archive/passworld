@@ -86,7 +86,17 @@ $initialOffset=50;
 
     //Will return a sub list with matches
     function search(data,query){
+      //Store matches
+      matches=[];
+      for (var i = 0; i < data.length; i++) {
+        //Collect password info
+        var resourceInfo=data[i];
+        if(resourceInfo["password"].includes(query)){
+          matches.push(resourceInfo);
+        }
+      }
 
+      return matches;
     }
 
     //When user is finished typing in search
@@ -98,6 +108,10 @@ $initialOffset=50;
       //Hide load more 
       $("#loadMore").hide()
       //Search for data
+      var matches=search(commonPasswords,query);
+      //Add these matches to the screen
+      console.log(matches);
+      addCommonPasswords(matches);
       
     }
 
