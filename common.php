@@ -73,6 +73,8 @@ $initialOffset=50;
     });
     //Setup initial variables
     var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
+    var passwordBucket=[];
+    var isSearch = false;
     var offset=parseInt(<?php echo $initialOffset ?>);
     var passwordLimit = 50;
 
@@ -91,7 +93,7 @@ $initialOffset=50;
       for (var i = 0; i < data.length; i++) {
         //Collect password info
         var resourceInfo=data[i];
-        if(resourceInfo["password"].includes(query)){
+        if(resourceInfo["password"].toUpperCase().includes(query.toUpperCase())){
           matches.push(resourceInfo);
         }
       }
@@ -110,8 +112,22 @@ $initialOffset=50;
       //Search for data
       var matches=search(commonPasswords,query);
       //Add these matches to the screen
-      console.log(matches);
-      addCommonPasswords(matches);
+      if (matches.length > passwordLimit){
+        $("#loadMore").show();
+        addCommonPasswords(matches.slice(0,passwordLimit));
+        isSearch=true
+        passwordBucket=matches;
+        offset=passwordLimit;
+        console.log("Starting offset is "+offset);
+        console.log(passwordBucket);
+      }else{
+        addCommonPasswords(matches);
+        isSearch=false
+        passwordBucket=[];
+        offset=0;
+      }
+      
+
       
     }
 
@@ -154,14 +170,24 @@ $initialOffset=50;
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
-      //Take array slice
-      addCommonPasswords(commonPasswords.slice(offset,offset+passwordLimit));
-      //Increase offset (limit and offset defined here)
-      offset+=passwordLimit;
-      //Check to see if offset is larger than list
-      if (offset >= commonPasswords.length){
-        $("#loadMore").hide();
+      if (isSearch){
+        addCommonPasswords(passwordBucket.slice(offset,offset+passwordLimit));
+        offset+=passwordLimit;
+        //If offset bigger than list then hide loadMore
+        if (offset >= passwordBucket.length - 1){
+          $("#loadMore").hide();
+        }
+      }else{
+        //Take array slice
+        addCommonPasswords(commonPasswords.slice(offset,offset+passwordLimit));
+        offset+=passwordLimit;
+        //If offset bigger than list then hide loadMore
+        if (offset >= commonPasswords.length - 1){
+          $("#loadMore").hide();
+        }
       }
+      
+          
     });
 
     
