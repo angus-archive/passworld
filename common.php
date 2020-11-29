@@ -7,6 +7,10 @@ include_once include_local_file("/includes/a_config.php");
 include_once include_private_file("/core/public_functions/connect-to-database.php");
 //Import public functions
 include_once include_private_file("/core/public_functions/public_functions.php");
+
+//Initial password offset (How many appear at first)
+$initialOffset=50;
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="">
@@ -29,13 +33,22 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       <!--Main View-->
       <div class="columns is-multiline is-centered is-tablet mt-5">
         <div class="column is-12-tablet is-10-desktop is-centered has-background-light border3">
+          <!--Search-->
+          <div class="panel-block">
+              <p class="control has-icons-left">
+                <input id="searchBar"class="input" type="text" placeholder="Search">
+                <span class="icon is-left">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+              </p>
+          </div>
           <!--View passwords-->
           <div id="moreBlock">
             <? $counter=0 ?>
-            <?foreach(get_common_passwords($pdo,0,50) as $password):?>
+            <?foreach(get_common_passwords($pdo,0,$initialOffset) as $password):?>
             <? $counter+=1 ?>
             <div class="panel-block">
-                <h6 class="subtitle is-6"><b><?=$counter?>:</b>&nbsp
+                <h6 class="subtitle is-6"><b><?=$password["password_id"]?>:</b>&nbsp
                 <?=$password["password"]?></h6>
             </div>
             <? endforeach; ?>
@@ -54,47 +67,69 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <? include_once include_local_file("/includes/footer.php");?>
   <!--Javascript-->
   <script type="text/javascript">
+    //JAVASCRIPT FIRST CALLS
+    $( document ).ready(function() {
+      //List of all the common passwords
+      var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
+      var offset=parseInt(<?php echo $initialOffset ?>);
+      var passwordLimit = 50;
+    });
+    /* =================== S E A R C H ==================== */
+
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms, 5 second for example
+    var $input = $('#searchBar');
+
+    //When user starts typing in search bar
+    $input.on('keyup', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    //on keydown, clear the countdown 
+    $input.on('keydown', function () {
+      clearTimeout(typingTimer);
+    });
+
+    //When user is finished typing in search
+    function doneTyping () {
+      query=$('#searchBar').val();
+      console.log("Searching for "+query);
+      
+    }
+
+    /*
+     * Function will add common passwords
+     * to the screen after an AJAX call
+     */
+    function addCommonPasswords(data){
+      for (var i = 0; i < data.length; i++) {
+        //Collect password info
+        resourceInfo=data[i];
+        //Collect info
+        var passwordContent=resourceInfo["password"]
+        var passwordID=resourceInfo["password_id"]
+        //Insert into HTML
+        var col = `<div class="panel-block">
+            <h6 class="subtitle is-6"><b>${passwordID}:</b>&nbsp
+            ${passwordContent}</h6>
+        </div>`
+
+        $("#moreBlock").append(col);
+
+      }
+    }
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
-      $.post("/helpers/loadMore", {"offset":offset,"limit":limitValue})
-        .done(function( data ) {
-          if(data){
-            data=JSON.parse(data);
-            //If array is empty (end of list) remove load more button
-            if (data.length < 1){
-              $( "#buttonBlock" ).remove();
-            }
-            //Add data here
-            for (var i = 0; i < data.length; i++) {
-              //Collect password info
-              resourceInfo=data[i];
-              //Collect info
-              var counterContent=offset+i+1;
-              var passwordContent=resourceInfo["password"]
-              //Insert into HTML
-              var col = `<div class="panel-block">
-                  <h6 class="subtitle is-6"><b>${counterContent}:</b>&nbsp
-                  ${passwordContent}</h6>
-              </div>`
-
-              $("#moreBlock").append(col);
-
-            }
-            //Increase offset (limit and offset defined here)
-            offset+=limitValue;
-
-          }else{
-            console.log("Invalid data returned")
-          }
-        });
+      //Take array slice
+      addCommonPasswords(commonPasswords.slice(offset,offset+passwordLimit));
+      //Increase offset (limit and offset defined here)
+      offset+=passwordLimit;
     });
 
-    //JAVASCRIPT FIRST CALLS
-    $( document ).ready(function() {
-      limitValue=50 //Defines the number of results loaded
-      offset=limitValue; //Defines starting offset
-    });
+    
   </script>
 </body>
 </html>
