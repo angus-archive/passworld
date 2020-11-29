@@ -34,13 +34,16 @@ $initialOffset=50;
       <div class="columns is-multiline is-centered is-tablet mt-5">
         <div class="column is-12-tablet is-10-desktop is-centered has-background-light border3">
           <!--Search-->
-          <div class="panel-block">
-              <p class="control has-icons-left">
-                <input id="searchBar"class="input" type="text" placeholder="Search">
-                <span class="icon is-left">
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                </span>
-              </p>
+          <div class="field is-grouped px-3 py-2">
+            <p class="control has-icons-left is-expanded">
+              <input id="searchBar"class="input" type="text" placeholder="Search">
+              <span class="icon is-left">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </span>
+            </p>
+            <p class="control">
+              <button id="clearButton" class="button is-danger">Clear</button>
+            </p>
           </div>
           <!--View passwords-->
           <div id="moreBlock">
@@ -69,7 +72,7 @@ $initialOffset=50;
   <script type="text/javascript">
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
-      
+      $("#clearButton").hide();
     });
     //Setup initial variables
     var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
@@ -104,6 +107,7 @@ $initialOffset=50;
     //When user is finished typing in search
     function doneTyping () {
       query=$('#searchBar').val();
+      $("#clearButton").show(300);
       console.log("Searching for "+query);
       //Hide all data
       $("#moreBlock").empty();
@@ -118,8 +122,6 @@ $initialOffset=50;
         isSearch=true
         passwordBucket=matches;
         offset=passwordLimit;
-        console.log("Starting offset is "+offset);
-        console.log(passwordBucket);
       }else{
         addCommonPasswords(matches);
         isSearch=false
@@ -167,6 +169,18 @@ $initialOffset=50;
     $input.on('keydown', function () {
       clearTimeout(typingTimer);
     });
+
+    //Clear button is clicked
+    $("#clearButton").click(function(){
+      isSearch=false
+      passwordBucket=[];
+      offset=0;
+      $("#searchBar").val("");
+      doneTyping();
+      $("#clearButton").hide(300);
+
+    });
+
 
     //When the loadMore button is clicked
     $( "#loadMore" ).click(function() {
