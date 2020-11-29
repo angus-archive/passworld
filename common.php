@@ -10,7 +10,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
 //Initial password offset (How many appear at first)
 $initialOffset=50;
-
+$all_passwords=get_all_common_passwords($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="en" class="">
@@ -45,16 +45,19 @@ $initialOffset=50;
               <button id="clearButton" class="button is-danger">Clear</button>
             </p>
           </div>
+          <!--Number of results-->
+          <div class="has-text-centered py-1">
+            <p><b id="resultsLabel"><?=sizeof($all_passwords)?></b> results</p>
+          </div>
           <!--View passwords-->
           <div id="moreBlock">
-            <? $counter=0 ?>
-            <?foreach(get_common_passwords($pdo,0,$initialOffset) as $password):?>
-            <? $counter+=1 ?>
+            <? for ($i = 0; $i < $initialOffset; $i++):?>
+            <? $password = $all_passwords[$i]?>
             <div class="panel-block">
                 <h6 class="subtitle is-6"><b><?=$password["password_id"]?>:</b>&nbsp
                 <?=$password["password"]?></h6>
             </div>
-            <? endforeach; ?>
+            <? endfor; ?>
           </div>
           <div class="panel-block" id="buttonBlock">
             <button id="loadMore" class="button is-link is-outlined is-fullwidth">
@@ -115,6 +118,8 @@ $initialOffset=50;
       $("#loadMore").hide()
       //Search for data
       var matches=search(commonPasswords,query);
+      //Update label
+      $("#resultsLabel").text(matches.length);
       //Add these matches to the screen
       if (matches.length > passwordLimit){
         $("#loadMore").show();
