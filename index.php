@@ -46,29 +46,9 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       <div class="columns is-multiline is-centered is-tablet mt-5">
         <!--Generated password label (GREEN) -->
         <div id="securityIndicator" class="column is-12-tablet is-10-desktop is-centered has-background-secure border3">
-          <div class="columns is-vcentered">
-            <div class="column is-12">
-              <?/*
-              <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace;" id="passwordView" class="is-size-4 has-text-light">aasjhd23413lsd</h4>
-              
-              
-              <input style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace; border: 0; background: transparent; padding: 5px;" id="passwordView"class="input has-text-light is-size-4" type="text" placeholder="Password" value="aasjhd23413lsd">
-              
-
-              <div class="field is-grouped px-3 py-2">
-                <p class="control is-expanded has-icons-left">
-                  <input id="passwordView"class="input is-large is-rounded" type="text" placeholder="Password">
-                  <span class="icon is-medium is-left">
-                      <i class="fas fa-key"></i>
-                  </span>
-                </p>
-                <p class="control">
-                  <button id="clearButton" class="button is-danger" >Clear</button>
-                </p>
-              </div>
-              */
-              ?>
-
+          <div class="columns is-multiline is-vcentered">
+            <!--Password label section-->
+            <div class="column is-8 is-9-widescreen">
               <div class="field is-grouped">
                 <p class="control is-expanded has-icons-left">
                   <input id="passwordView"class="input is-medium has-text-light" type="text" placeholder="Password">
@@ -76,21 +56,20 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                       <i class="fas fa-key"></i>
                   </span>
                 </p>
-                <p class="control">
-                  <button id="clearButton" class="button is-medium">Clear</button>
-                </p>
-
-                <p class="control">
-                  <button id="copyButton" class="button is-medium"><span class="icon"><i class="far fa-copy"></i></span></button>
-                </p>
-
-                <p class="control">
-                  <button id="refresh" class="button is-medium"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
-                </p>
-
-
               </div>
-
+            </div>
+            <div class="column is-4 is-3-widescreen">
+              <div class="level is-mobile">
+                <div class="level-item">
+                  <button id="clearButton" class="button"><span class="icon"><i class="fas fa-backspace"></i></span></button>
+                </div>
+                <div class="level-item">
+                  <button id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
+                </div>
+                <div class="level-item">
+                  <button id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
