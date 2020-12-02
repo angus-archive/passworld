@@ -64,23 +64,6 @@ function checkSet(widgetID){
   return false;
 }
 
-/*
- * Will generate the complex password
- * as well as updating the correct labels
- */
-function update(length){
-  //Update the password label with a generated password
-  password=generate(length);
-  $("#passwordView").text(password);
-  //Update the length label
-  let lengthContent="Length: "+length;
-  $("#lengthLabel").text(lengthContent);
-  //Estimate time
-  var timeToCrack = estimateTime(password)
-  $("#crackTimeLabel").text("Time to crack: "+convertTime(timeToCrack));
-  //Update colours
-  updateColours(rankPassword(timeToCrack));
-}
 
 
 /*
@@ -165,36 +148,3 @@ function convertTime(time){
   return response;
 }
 
-
-/*
- * Will update the ui based on the generated passwords
- * rank
- */
-
-function updateColours(passwordRank){
-  //Remove all classes
-  allClasses=["secure","medium","insecure"]
-  for (i = 0; i < allClasses.length; i++) {
-    $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
-    $("#strengthLabel").removeClass("has-text-"+allClasses[i]);
-  } 
-  switch(passwordRank) {
-    case 1:
-      $("#securityIndicator").addClass("has-background-insecure");
-      //Update label and colour
-      $("#strengthLabel").text("Strength: Insecure");
-      $("#strengthLabel").addClass("has-text-insecure");
-      break;
-    case 2:
-      $("#securityIndicator").addClass("has-background-medium");
-      //Update label and colour
-      $("#strengthLabel").text("Strength: Medium");
-      $("#strengthLabel").addClass("has-text-medium");
-      break;
-    default:
-      $("#securityIndicator").addClass("has-background-secure");
-      //Update label and colour
-      $("#strengthLabel").text("Strength: Secure");
-      $("#strengthLabel").addClass("has-text-secure");
-  } 
-}

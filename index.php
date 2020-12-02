@@ -18,6 +18,15 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   @import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
+
+  #passwordView{
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: scroll;
+    font-family: 'Cousine', monospace; border: 0;
+    background: transparent;
+  }
+
   </style> 
 </head>
 <body>
@@ -37,20 +46,51 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       <div class="columns is-multiline is-centered is-tablet mt-5">
         <!--Generated password label (GREEN) -->
         <div id="securityIndicator" class="column is-12-tablet is-10-desktop is-centered has-background-secure border3">
-          <div class="columns">
-            <div class="column is-10">
+          <div class="columns is-vcentered">
+            <div class="column is-12">
+              <?/*
               <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace;" id="passwordView" class="is-size-4 has-text-light">aasjhd23413lsd</h4>
-            </div>
-            <div class="column is-2">
-              <!--Level for buttons -->
-              <div class="level is-mobile">
-                <div class="level-item">
-                  <button id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
-                </div>
-                <div class="level-item">
-                  <button id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
-                </div>
+              
+              
+              <input style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace; border: 0; background: transparent; padding: 5px;" id="passwordView"class="input has-text-light is-size-4" type="text" placeholder="Password" value="aasjhd23413lsd">
+              
+
+              <div class="field is-grouped px-3 py-2">
+                <p class="control is-expanded has-icons-left">
+                  <input id="passwordView"class="input is-large is-rounded" type="text" placeholder="Password">
+                  <span class="icon is-medium is-left">
+                      <i class="fas fa-key"></i>
+                  </span>
+                </p>
+                <p class="control">
+                  <button id="clearButton" class="button is-danger" >Clear</button>
+                </p>
               </div>
+              */
+              ?>
+
+              <div class="field is-grouped">
+                <p class="control is-expanded has-icons-left">
+                  <input id="passwordView"class="input is-medium has-text-light" type="text" placeholder="Password">
+                  <span class="icon is-medium is-left has-text-light">
+                      <i class="fas fa-key"></i>
+                  </span>
+                </p>
+                <p class="control">
+                  <button id="clearButton" class="button is-medium">Clear</button>
+                </p>
+
+                <p class="control">
+                  <button id="copyButton" class="button is-medium"><span class="icon"><i class="far fa-copy"></i></span></button>
+                </p>
+
+                <p class="control">
+                  <button id="refresh" class="button is-medium"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                </p>
+
+
+              </div>
+
             </div>
           </div>
         </div>
@@ -64,7 +104,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
           <!--Length Slider-->
           <div class="slidecontainer">
-            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" onmouseup="sliderUp()" ontouchend="sliderUp()" style="width: 100%">
+            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" style="width: 100%">
           </div>
           <br class="mt-4">
           <!--Customise controls-->
@@ -116,19 +156,96 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
     }
 
+    /*
+     * Will generate the complex password
+     * as well as updating the correct labels
+     */
+    function update(length){
+      //Update the password label with a generated password
+      password=generate(length);
+      $("#passwordView").val(password);
+      //Update the length label
+      let lengthContent="Length: "+length;
+      $("#lengthLabel").text(lengthContent);
+      rankAndUpdate(password);
+    }
+
+    /*
+     * Will update the ui based on the generated passwords
+     * rank
+     */
+
+    function updateColours(passwordRank){
+      //Remove all classes
+      allClasses=["secure","average","insecure"]
+      for (i = 0; i < allClasses.length; i++) {
+        $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
+        $("#strengthLabel").removeClass("has-text-"+allClasses[i]);
+      } 
+      switch(passwordRank) {
+        case 1:
+          $("#securityIndicator").addClass("has-background-insecure");
+          //Update label and colour
+          $("#strengthLabel").text("Strength: Insecure");
+          $("#strengthLabel").addClass("has-text-insecure");
+          break;
+        case 2:
+          $("#securityIndicator").addClass("has-background-average");
+          //Update label and colour
+          $("#strengthLabel").text("Strength: Medium");
+          $("#strengthLabel").addClass("has-text-average");
+          break;
+        default:
+          $("#securityIndicator").addClass("has-background-secure");
+          //Update label and colour
+          $("#strengthLabel").text("Strength: Secure");
+          $("#strengthLabel").addClass("has-text-secure");
+      } 
+    }
+
+    //Update the labels etc given the password
+    function rankAndUpdate(password){
+      var timeToCrack = estimateTime(password)
+      $("#crackTimeLabel").text("Time to crack: "+convertTime(timeToCrack));
+      //Update colours
+      updateColours(rankPassword(timeToCrack));
+    }
+
+
+
     /* =================== B I N D I N G S ==================== */
+
+
+    //When user starts typing in password field
+    $("#passwordView").on('keyup', function () {
+      password=$("#passwordView").val();
+      rankAndUpdate(password);
+    });
+
+    //When user clicks clear button
+    $("#clearButton").click(function() {
+      $("#passwordView").val("");
+      //Update
+      rankAndUpdate("");
+    });
 
     
     /* Function will copy password to clipboard*/
     $( "#copyButton" ).click(function() {
-      //Get the password label element
-      element=("#passwordView")
-      //Copy to clipboard using temp input field
-      var $temp = $("<input>");
-      $("body").append($temp);
-      $temp.val($(element).text()).select();
+      var copyText = document.getElementById("passwordView");
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
       document.execCommand("copy");
-      $temp.remove();
+
+      $("#copyButton").animate({
+              opacity: 0.5
+          }, 500)
+          .delay(200)
+          .animate({
+              opacity: 1
+          }, 500);
+
+
     });
 
     /*
