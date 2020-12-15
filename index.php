@@ -124,6 +124,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <script src="/assets/scripts/password.js"></script>
   <script type="text/javascript">
     
+    //Setup initial variables
+    var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
 
     /*
      * Function will get the current value
@@ -182,12 +184,32 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       } 
     }
 
+    //Check if password is a common one
+    function isPasswordCommon(password){
+      for (var i = 0; i < commonPasswords.length; i++) {
+        //Collect password info
+        var inList=commonPasswords[i]["password"].toUpperCase();
+        var onscreen=password.toUpperCase();
+        if(onscreen.includes(inList)){
+          return true;
+        }
+      }
+      return 
+    }
+
     //Update the labels etc given the password
     function rankAndUpdate(password){
       var timeToCrack = estimateTime(password)
       $("#crackTimeLabel").text("Time to crack: "+convertTime(timeToCrack));
-      //Update colours
-      updateColours(rankPassword(timeToCrack));
+      //Check if password is common
+      if (isPasswordCommon(password)){
+        $("#crackTimeLabel").text("Time to crack: Instant (Common Password)");
+        updateColours(1)
+      }else{
+        //Update colours
+        updateColours(rankPassword(password,timeToCrack));
+      }
+      
     }
 
 
