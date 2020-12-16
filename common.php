@@ -42,7 +42,7 @@ $all_passwords=get_all_common_passwords($pdo);
               </span>
             </p>
             <p class="control">
-              <button id="clearButton" class="button is-danger" style="display: none">Clear</button>
+              <button aria-label="Clear search" id="clearButton" class="button is-danger" style="display: none">Clear</button>
             </p>
           </div>
           <!--Number of results-->

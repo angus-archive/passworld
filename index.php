@@ -61,13 +61,13 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             <div class="column is-4 is-3-widescreen">
               <div class="level is-mobile">
                 <div class="level-item">
-                  <button id="clearButton" class="button"><span class="icon"><i class="fas fa-backspace"></i></span></button>
+                  <button aria-label="clear password" id="clearButton" class="button"><span class="icon"><i class="fas fa-backspace"></i></span></button>
                 </div>
                 <div class="level-item">
-                  <button id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
+                  <button aria-label="copy password" id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
                 </div>
                 <div class="level-item">
-                  <button id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                  <button aria-label="regenerate password" id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
                 </div>
               </div>
             </div>
@@ -80,10 +80,10 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
           <hr style="background-color: #E3E2E4">
           <!--Length label-->
-          <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
+          <label for="lengthSlider" id="lengthLabel" class="is-size-5 mb-1">Length: 25</label>
           <!--Length Slider-->
           <div class="slidecontainer">
-            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" style="width: 100%">
+            <input id="lengthSlider" type="range" min="3" aria-valuemin="3" max="35" aria-valuemax="35" value="10" aria-valuenow="10" class="slider" style="width: 100%">
           </div>
           <br class="mt-4">
           <!--Customise controls-->
@@ -94,21 +94,21 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                 <div class="level-item">
                   <label class="checkContainer has-text-centered">Numbers
                     <input id="numCheck" type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
+                    <span aria-checked='true' aria-label="Include Numbers in password" class="checkmark"></span>
                   </label>
                 </div>
                 <!--Letters-->
                 <div class="level-item">
                   <label class="checkContainer has-text-centered">Letters
                     <input id="letCheck" type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
+                    <span aria-checked='true'aria-label="Include Letters in password" class="checkmark"></span>
                   </label>
                 </div>
                 <!--Symbols-->
                 <div class="level-item">
                   <label class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
+                    <span aria-checked='true' aria-label="Include Symbols in password" aria- class="checkmark"></span>
                   </label>
                 </div>     
             </div>
@@ -207,7 +207,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         updateColours(1)
       }else{
         //Update colours
-        updateColours(rankPassword(password,timeToCrack));
+        updateColours(rankPassword(timeToCrack));
       }
       
     }

@@ -34,7 +34,7 @@ function isCurrentSR($pageName){
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="/assets/images/core/logo.svg" width="112" height="28">
+      <img src="/assets/images/core/logo.svg" alt="Passworld Logo" width="112" height="28">
     </a>
 
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="passNav">
@@ -44,7 +44,7 @@ function isCurrentSR($pageName){
     </a>
   </div>
 
-  <div id="passNav" class="navbar-menu">
+  <div id="passNav" class="navbar-menu" aria-label="menu">
     <div class="navbar-start">
       <!--Generate password-->
       <a class="navbar-item <?isCurrent("index")?>" href="/">
