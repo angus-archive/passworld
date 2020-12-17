@@ -103,7 +103,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         <!--Customise Section (WHITE)-->
         <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3">
           <!--Strength section-->
-          <h4 id="strengthLabel" class="is-size-6 mb-1">Strength: 25</h4>
+          <h4 class="is-size-6 mb-1">Strength: <b><span id="strengthLabel">25</span></b></h4>
           <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
           <hr style="background-color: #E3E2E4">
           <!--Length label-->
@@ -188,30 +188,26 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       allClasses=["secure","average","insecure"]
       for (i = 0; i < allClasses.length; i++) {
         $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
-        $("#strengthLabel").removeClass("has-text-"+allClasses[i]);
         $("#strengthIcon").removeClass("icon-"+allClasses[i])
       } 
       switch(passwordRank) {
         case 1:
           $("#securityIndicator").addClass("has-background-insecure");
           //Update label and colour
-          $("#strengthLabel").text("Strength: Insecure");
-          $("#strengthLabel").addClass("has-text-insecure");
+          $("#strengthLabel").text("Insecure");
           //Update icon
           $("#strengthIcon").addClass("icon-insecure");
           break;
         case 2:
           $("#securityIndicator").addClass("has-background-average");
           //Update label and colour
-          $("#strengthLabel").text("Strength: Medium");
-          $("#strengthLabel").addClass("has-text-average");
+          $("#strengthLabel").text("Medium");
           $("#strengthIcon").addClass("icon-average");
           break;
         default:
           $("#securityIndicator").addClass("has-background-secure");
           //Update label and colour
-          $("#strengthLabel").text("Strength: Secure");
-          $("#strengthLabel").addClass("has-text-secure");
+          $("#strengthLabel").text("Secure");
           $("#strengthIcon").addClass("icon-secure");
       } 
     }
