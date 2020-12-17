@@ -27,6 +27,27 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     background: transparent;
   }
 
+  .icon-insecure{
+    background: url('/assets/images/icons/insecure.svg');
+    height: 20px;
+    width: 20px;
+    display: block;
+  }
+
+  .icon-average{
+    background: url('/assets/images/icons/average.svg');
+    height: 20px;
+    width: 20px;
+    display: block;
+  }
+
+  .icon-secure{
+      background: url('/assets/images/icons/secure.svg');
+      height: 20px;
+      width: 20px;
+      display: block;
+    }
+
   </style> 
 </head>
 <body>
@@ -52,8 +73,14 @@ include_once include_private_file("/core/public_functions/public_functions.php")
               <div class="field is-grouped">
                 <p class="control is-expanded has-icons-left">
                   <input id="passwordView"class="input is-medium has-text-light" type="text" placeholder="Password">
+                  <?/*
                   <span class="icon is-medium is-left has-text-light">
                       <i class="fas fa-key"></i>
+                  </span>
+                  */
+                  ?>
+                  <span class="icon is-medium is-left has-text-light">
+                      <i id="strengthIcon" class="low-icon"></i>
                   </span>
                 </p>
               </div>
@@ -92,23 +119,23 @@ include_once include_private_file("/core/public_functions/public_functions.php")
               
                 <!--Numbers-->
                 <div class="level-item">
-                  <label class="checkContainer has-text-centered">Numbers
+                  <label aria-label="Include Numbers in password" class="checkContainer has-text-centered">Numbers
                     <input id="numCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true' aria-label="Include Numbers in password" class="checkmark"></span>
+                    <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Letters-->
                 <div class="level-item">
-                  <label class="checkContainer has-text-centered">Letters
+                  <label aria-label="Include Letters in password" class="checkContainer has-text-centered">Letters
                     <input id="letCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true'aria-label="Include Letters in password" class="checkmark"></span>
+                    <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Symbols-->
                 <div class="level-item">
-                  <label class="checkContainer has-text-centered">Symbols
+                  <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true' aria-label="Include Symbols in password" aria- class="checkmark"></span>
+                    <span aria-checked='true'  aria- class="checkmark"></span>
                   </label>
                 </div>     
             </div>
@@ -162,6 +189,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       for (i = 0; i < allClasses.length; i++) {
         $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
         $("#strengthLabel").removeClass("has-text-"+allClasses[i]);
+        $("#strengthIcon").removeClass("icon-"+allClasses[i])
       } 
       switch(passwordRank) {
         case 1:
@@ -169,18 +197,22 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           //Update label and colour
           $("#strengthLabel").text("Strength: Insecure");
           $("#strengthLabel").addClass("has-text-insecure");
+          //Update icon
+          $("#strengthIcon").addClass("icon-insecure");
           break;
         case 2:
           $("#securityIndicator").addClass("has-background-average");
           //Update label and colour
           $("#strengthLabel").text("Strength: Medium");
           $("#strengthLabel").addClass("has-text-average");
+          $("#strengthIcon").addClass("icon-average");
           break;
         default:
           $("#securityIndicator").addClass("has-background-secure");
           //Update label and colour
           $("#strengthLabel").text("Strength: Secure");
           $("#strengthLabel").addClass("has-text-secure");
+          $("#strengthIcon").addClass("icon-secure");
       } 
     }
 
