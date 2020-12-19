@@ -18,6 +18,36 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   @import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
+
+  #passwordView{
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: scroll;
+    font-family: 'Cousine', monospace; border: 0;
+    background: transparent;
+  }
+
+  .icon-insecure{
+    background: url('/assets/images/icons/insecure.svg');
+    height: 20px;
+    width: 20px;
+    display: block;
+  }
+
+  .icon-average{
+    background: url('/assets/images/icons/average.svg');
+    height: 20px;
+    width: 20px;
+    display: block;
+  }
+
+  .icon-secure{
+      background: url('/assets/images/icons/secure.svg');
+      height: 20px;
+      width: 20px;
+      display: block;
+    }
+
   </style> 
 </head>
 <body>
@@ -37,18 +67,34 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       <div class="columns is-multiline is-centered is-tablet mt-5">
         <!--Generated password label (GREEN) -->
         <div id="securityIndicator" class="column is-12-tablet is-10-desktop is-centered has-background-secure border3">
-          <div class="columns">
-            <div class="column is-10">
-              <h4 style="white-space: nowrap;overflow: hidden; overflow-x: scroll; height: 100%; font-family: 'Cousine', monospace;" id="passwordView" class="is-size-4 has-text-light">aasjhd23413lsd</h4>
+          <div class="columns is-multiline is-vcentered">
+            <!--Password label section-->
+            <div class="column is-8 is-9-widescreen">
+              <div class="field is-grouped">
+                <p class="control is-expanded has-icons-left">
+                  <input id="passwordView"class="input is-medium has-text-light" type="text" placeholder="Password">
+                  <?/*
+                  <span class="icon is-medium is-left has-text-light">
+                      <i class="fas fa-key"></i>
+                  </span>
+                  */
+                  ?>
+                  <span class="icon is-medium is-left has-text-light">
+                      <i id="strengthIcon" class="low-icon"></i>
+                  </span>
+                </p>
+              </div>
             </div>
-            <div class="column is-2">
-              <!--Level for buttons -->
+            <div class="column is-4 is-3-widescreen">
               <div class="level is-mobile">
                 <div class="level-item">
-                  <button id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
+                  <button aria-label="clear password" id="clearButton" class="button"><span class="icon"><i class="fas fa-backspace"></i></span></button>
                 </div>
                 <div class="level-item">
-                  <button id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                  <button aria-label="copy password" id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
+                </div>
+                <div class="level-item">
+                  <button aria-label="regenerate password" id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
                 </div>
               </div>
             </div>
@@ -57,14 +103,14 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         <!--Customise Section (WHITE)-->
         <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3">
           <!--Strength section-->
-          <h4 id="strengthLabel" class="is-size-6 mb-1">Strength: 25</h4>
+          <h4 class="is-size-6 mb-1">Strength: <b><span id="strengthLabel">25</span></b></h4>
           <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
           <hr style="background-color: #E3E2E4">
           <!--Length label-->
-          <h4 id="lengthLabel" class="is-size-5 mb-1">Length: 25</h4>
+          <label for="lengthSlider" id="lengthLabel" class="is-size-5 mb-1">Length: 25</label>
           <!--Length Slider-->
           <div class="slidecontainer">
-            <input id="lengthSlider" type="range" min="3" max="35" value="10" class="slider" onmouseup="sliderUp()" ontouchend="sliderUp()" style="width: 100%">
+            <input id="lengthSlider" type="range" min="3" aria-valuemin="3" max="35" aria-valuemax="35" value="10" aria-valuenow="10" class="slider" style="width: 100%">
           </div>
           <br class="mt-4">
           <!--Customise controls-->
@@ -73,34 +119,25 @@ include_once include_private_file("/core/public_functions/public_functions.php")
               
                 <!--Numbers-->
                 <div class="level-item">
-                  <label class="checkContainer has-text-centered">Numbers
+                  <label aria-label="Include Numbers in password" class="checkContainer has-text-centered">Numbers
                     <input id="numCheck" type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
+                    <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Letters-->
                 <div class="level-item">
-                  <label class="checkContainer has-text-centered">Letters
+                  <label aria-label="Include Letters in password" class="checkContainer has-text-centered">Letters
                     <input id="letCheck" type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
+                    <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Symbols-->
                 <div class="level-item">
-                  <label class="checkContainer has-text-centered">Symbols
+                  <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                    <span aria-checked='true' class="checkmark"></span>
+                    <span aria-checked='true'  aria- class="checkmark"></span>
                   </label>
-                </div> 
-                <!--Symbols-->
-                <div class="level-item">
-                  <label aria-label="Make password explicit" class="checkContainer has-text-centered">Explicit
-                    <input id="swearCheck" type="checkbox" checked="false">
-                    <span aria-checked='true' class="checkmark"></span>
-                  </label>
-                </div> 
-
+                </div>     
             </div>
           </fieldset>  
         </div>
@@ -116,9 +153,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     
     //Setup initial variables
     var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
-    var swear_words=<?php echo json_encode(get_swear_words($pdo))?>;
-    var leetDict = {"E":"3","I":"1","O":"0"}
-    $("#swearCheck").prop("checked", false);
 
     /*
      * Function will get the current value
@@ -130,51 +164,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
     }
 
-
-    function randomArrayShuffle(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-      while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-      return array;
-    }
-
-
-
-
-    /*
-     * Function will generate a swear word password
-     */
-    function generateSwearWord(length){
-      //Calculate padding
-      paddingSpace=length/2
-      //Choose a swear word
-      chosenWord="hello"
-      randomArrayShuffle(swear_words)
-      for (var i = 0; i < swear_words.length; i++) {
-        currentSwear=swear_words[i]["word"]
-        if (currentSwear.length <= (length / 2)){
-          console.log(currentSwear);
-          chosenWord=currentSwear;
-          break
-        }
-      }
-      //Create padding
-      paddingLeft=generate(paddingSpace,skip=true)
-      paddingRight=generate(paddingSpace,skip=true)
-      //Create Leet
-      middle=(chosenWord);
-      whole=paddingLeft+middle+paddingRight
-      console.log(whole)
-      return whole
-
-    }
-
-  
     /*
      * Will generate the complex password
      * as well as updating the correct labels
@@ -187,34 +176,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       let lengthContent="Length: "+length;
       $("#lengthLabel").text(lengthContent);
       rankAndUpdate(password);
-    }
-
-
-    /*
-     * Will generate the complex password
-     */
-    function generate(length,skip=false){
-      var password="";
-
-      //Set of parameters to use
-      masterSet=[]
-      allSet=[["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"],
-        ["0123456789","numCheck"],[";!£$&'#,?{}[]()+=*<>~","symCheck"]]
-
-      //First check if explicit
-      if($("#swearCheck").is(':checked') && skip == false){
-        return generateSwearWord(length)
-      }
-
-      //Filter into master set (only add characters based on checkboxes)
-      for (var i = 0; i < allSet.length; i++) {
-        if (checkSet(allSet[i][1])){
-          masterSet.push(allSet[i])
-        }
-      }
-      //Create a master string to pick randomly from
-      masterString=createSet(masterSet,length).split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
-      return masterString
     }
 
     /*
@@ -279,19 +240,41 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       
     }
 
+
+
     /* =================== B I N D I N G S ==================== */
+
+
+    //When user starts typing in password field
+    $("#passwordView").on('keyup', function () {
+      password=$("#passwordView").val();
+      rankAndUpdate(password);
+    });
+
+    //When user clicks clear button
+    $("#clearButton").click(function() {
+      $("#passwordView").val("");
+      //Update
+      rankAndUpdate("");
+    });
 
     
     /* Function will copy password to clipboard*/
     $( "#copyButton" ).click(function() {
-      //Get the password label element
-      element=("#passwordView")
-      //Copy to clipboard using temp input field
-      var $temp = $("<input>");
-      $("body").append($temp);
-      $temp.val($(element).text()).select();
+      var copyText = document.getElementById("passwordView");
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
       document.execCommand("copy");
-      $temp.remove();
+
+      $("#copyButton").animate({
+              opacity: 0.5
+          }, 500)
+          .delay(200)
+          .animate({
+              opacity: 1
+          }, 500);
+
+
     });
 
     /*
@@ -336,7 +319,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
        getSliderAndUpdate(); 
-
     });
 
 

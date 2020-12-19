@@ -14,15 +14,15 @@ $success: #18BF3F;
 //New colours
 $bluey: #00A08A;
 $background: #D9DFE3;
-$secure: #50B966;
-$medium: #E49E0F;
-$insecure: #B95852;
+$secure: #529143;
+$average: #AD8936;
+$insecure: #890001;
 
 //Add new color variables to the color map.
 @import "../../node_modules/bulma/sass/utilities/derived-variables";
 $addColors: (
   "secure":($secure, findColorInvert($secure)),
-  "medium":($medium, findColorInvert($medium)),
+  "average":($average, findColorInvert($average)),
   "insecure":($insecure, findColorInvert($insecure)),
   "bluey":($bluey,findColorInvert($bluey)),
   "background":($background,findColorInvert($background)),
@@ -226,7 +226,7 @@ N A V
   transition: 0.3s;
 }
 .navbar-start a:hover{
-  color: $secure !important;
+  color: $bluey !important;
 }
 
 
