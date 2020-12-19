@@ -135,9 +135,17 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                 <div class="level-item">
                   <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true'  aria- class="checkmark"></span>
+                    <span aria-checked='true' class="checkmark"></span>
                   </label>
-                </div>     
+                </div> 
+                <!--Symbols-->
+                <div class="level-item">
+                  <label aria-label="Make password explicit" class="checkContainer has-text-centered">Explicit
+                    <input id="swearCheck" type="checkbox" checked="false">
+                    <span aria-checked='true' class="checkmark"></span>
+                  </label>
+                </div> 
+
             </div>
           </fieldset>  
         </div>
@@ -153,6 +161,9 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     
     //Setup initial variables
     var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
+    var swear_words=<?php echo json_encode(get_swear_words($pdo))?>;
+    var leetDict = {"E":"3","I":"1","O":"0"}
+    $("#swearCheck").prop("checked", false);
 
     /*
      * Function will get the current value
@@ -164,6 +175,51 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
     }
 
+
+    function randomArrayShuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+
+
+
+
+    /*
+     * Function will generate a swear word password
+     */
+    function generateSwearWord(length){
+      //Calculate padding
+      paddingSpace=length/2
+      //Choose a swear word
+      chosenWord="hello"
+      randomArrayShuffle(swear_words)
+      for (var i = 0; i < swear_words.length; i++) {
+        currentSwear=swear_words[i]["word"]
+        if (currentSwear.length <= (length / 2)){
+          console.log(currentSwear);
+          chosenWord=currentSwear;
+          break
+        }
+      }
+      //Create padding
+      paddingLeft=generate(paddingSpace,skip=true)
+      paddingRight=generate(paddingSpace,skip=true)
+      //Create Leet
+      middle=(chosenWord);
+      whole=paddingLeft+middle+paddingRight
+      console.log(whole)
+      return whole
+
+    }
+
+  
     /*
      * Will generate the complex password
      * as well as updating the correct labels
@@ -176,6 +232,34 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       let lengthContent="Length: "+length;
       $("#lengthLabel").text(lengthContent);
       rankAndUpdate(password);
+    }
+
+
+    /*
+     * Will generate the complex password
+     */
+    function generate(length,skip=false){
+      var password="";
+
+      //Set of parameters to use
+      masterSet=[]
+      allSet=[["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"],
+        ["0123456789","numCheck"],[";!£$&'#,?{}[]()+=*<>~","symCheck"]]
+
+      //First check if explicit
+      if($("#swearCheck").is(':checked') && skip == false){
+        return generateSwearWord(length)
+      }
+
+      //Filter into master set (only add characters based on checkboxes)
+      for (var i = 0; i < allSet.length; i++) {
+        if (checkSet(allSet[i][1])){
+          masterSet.push(allSet[i])
+        }
+      }
+      //Create a master string to pick randomly from
+      masterString=createSet(masterSet,length).split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
+      return masterString
     }
 
     /*
@@ -319,6 +403,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
        getSliderAndUpdate(); 
+
     });
 
 
