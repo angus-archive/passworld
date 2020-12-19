@@ -6,6 +6,23 @@
 
 /* =================== F U N C T I O N S ==================== */
 
+
+//Convert text into Leet speak
+function convertLeet(text){
+  returnString="";
+  for (var i = 0; i < text.length; i++) {
+    currentChar=text.charAt(i)
+    if (currentChar.toUpperCase() in leetDict){
+      returnString+=leetDict[currentChar.toUpperCase()]
+    }else{
+      returnString+=currentChar;
+    }
+  }
+
+  return returnString;
+}
+
+
 /*
  * Will generate the complex password
  */
