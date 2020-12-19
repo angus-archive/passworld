@@ -73,12 +73,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
               <div class="field is-grouped">
                 <p class="control is-expanded has-icons-left">
                   <input id="passwordView"class="input is-medium has-text-light" type="text" placeholder="Password">
-                  <?/*
-                  <span class="icon is-medium is-left has-text-light">
-                      <i class="fas fa-key"></i>
-                  </span>
-                  */
-                  ?>
                   <span class="icon is-medium is-left has-text-light">
                       <i id="strengthIcon" class="low-icon"></i>
                   </span>
@@ -302,7 +296,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         //Collect password info
         var inList=commonPasswords[i]["password"].toUpperCase();
         var onscreen=password.toUpperCase();
-        if(onscreen.includes(inList)){
+        if(onscreen == (inList)){
           return true;
         }
       }
