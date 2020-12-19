@@ -50,6 +50,13 @@ function isCurrentSR($pageName){
       <a class="navbar-item <?isCurrent("index")?>" href="/">
         Generate
       </a>
+
+      <!--Pa$$word-->
+      <a class="navbar-item <?isCurrent("ass")?>" href="/ass.php">
+        a$$word
+      </a>
+
+
       <!--View common passwords-->
       <a class="navbar-item <?isCurrent("common")?>" href="/common">
         Common Passwords

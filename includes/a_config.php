@@ -52,6 +52,14 @@ switch ($full_path) {
 		$PAGE_DESCRIPTION="Generate a strong secure password here at Passworld";
 		break;
 
+	//Ass page
+	case '/ass.php':
+		$NAV_PAGE="ass";
+		$CURRENT_PAGE="ass";
+		$PAGE_TITLE='a$$word | Passworld';
+		$PAGE_DESCRIPTION="Generate a secure rude password here at Passworld";
+		break;
+
 	//About Page
 	case '/about.php':
 		$NAV_PAGE="about";
