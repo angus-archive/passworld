@@ -89,9 +89,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                 <div class="level-item">
                   <label class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
-<<<<<<< Updated upstream
                     <span class="checkmark"></span>
-=======
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div> 
@@ -100,7 +98,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                   <label aria-label="Make password explicit" class="checkContainer has-text-centered">Explicit
                     <input id="swearCheck" type="checkbox" checked="false">
                     <span aria-checked='true' class="checkmark"></span>
->>>>>>> Stashed changes
                   </label>
                 </div> 
 
@@ -117,14 +114,11 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <script src="/assets/scripts/password.js"></script>
   <script type="text/javascript">
     
-<<<<<<< Updated upstream
-=======
     //Setup initial variables
     var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
     var swear_words=<?php echo json_encode(get_swear_words($pdo))?>;
     var leetDict = {"E":"3","I":"1","O":"0"}
     $("#swearCheck").prop("checked", false);
->>>>>>> Stashed changes
 
     /*
      * Function will get the current value
@@ -136,8 +130,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
     }
 
-<<<<<<< Updated upstream
-=======
 
     function randomArrayShuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
@@ -287,9 +279,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       
     }
 
-
-
->>>>>>> Stashed changes
     /* =================== B I N D I N G S ==================== */
 
     
