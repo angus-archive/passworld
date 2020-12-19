@@ -89,9 +89,21 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                 <div class="level-item">
                   <label class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
+<<<<<<< Updated upstream
                     <span class="checkmark"></span>
+=======
+                    <span aria-checked='true' class="checkmark"></span>
                   </label>
-                </div>     
+                </div> 
+                <!--Symbols-->
+                <div class="level-item">
+                  <label aria-label="Make password explicit" class="checkContainer has-text-centered">Explicit
+                    <input id="swearCheck" type="checkbox" checked="false">
+                    <span aria-checked='true' class="checkmark"></span>
+>>>>>>> Stashed changes
+                  </label>
+                </div> 
+
             </div>
           </fieldset>  
         </div>
@@ -105,6 +117,14 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <script src="/assets/scripts/password.js"></script>
   <script type="text/javascript">
     
+<<<<<<< Updated upstream
+=======
+    //Setup initial variables
+    var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
+    var swear_words=<?php echo json_encode(get_swear_words($pdo))?>;
+    var leetDict = {"E":"3","I":"1","O":"0"}
+    $("#swearCheck").prop("checked", false);
+>>>>>>> Stashed changes
 
     /*
      * Function will get the current value
@@ -116,6 +136,160 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
     }
 
+<<<<<<< Updated upstream
+=======
+
+    function randomArrayShuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+
+
+
+
+    /*
+     * Function will generate a swear word password
+     */
+    function generateSwearWord(length){
+      //Calculate padding
+      paddingSpace=length/2
+      //Choose a swear word
+      chosenWord="hello"
+      randomArrayShuffle(swear_words)
+      for (var i = 0; i < swear_words.length; i++) {
+        currentSwear=swear_words[i]["word"]
+        if (currentSwear.length <= (length / 2)){
+          console.log(currentSwear);
+          chosenWord=currentSwear;
+          break
+        }
+      }
+      //Create padding
+      paddingLeft=generate(paddingSpace,skip=true)
+      paddingRight=generate(paddingSpace,skip=true)
+      //Create Leet
+      middle=(chosenWord);
+      whole=paddingLeft+middle+paddingRight
+      console.log(whole)
+      return whole
+
+    }
+
+  
+    /*
+     * Will generate the complex password
+     * as well as updating the correct labels
+     */
+    function update(length){
+      //Update the password label with a generated password
+      password=generate(length);
+      $("#passwordView").val(password);
+      //Update the length label
+      let lengthContent="Length: "+length;
+      $("#lengthLabel").text(lengthContent);
+      rankAndUpdate(password);
+    }
+
+
+    /*
+     * Will generate the complex password
+     */
+    function generate(length,skip=false){
+      var password="";
+
+      //Set of parameters to use
+      masterSet=[]
+      allSet=[["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"],
+        ["0123456789","numCheck"],[";!£$&'#,?{}[]()+=*<>~","symCheck"]]
+
+      //First check if explicit
+      if($("#swearCheck").is(':checked') && skip == false){
+        return generateSwearWord(length)
+      }
+
+      //Filter into master set (only add characters based on checkboxes)
+      for (var i = 0; i < allSet.length; i++) {
+        if (checkSet(allSet[i][1])){
+          masterSet.push(allSet[i])
+        }
+      }
+      //Create a master string to pick randomly from
+      masterString=createSet(masterSet,length).split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
+      return masterString
+    }
+
+    /*
+     * Will update the ui based on the generated passwords
+     * rank
+     */
+
+    function updateColours(passwordRank){
+      //Remove all classes
+      allClasses=["secure","average","insecure"]
+      for (i = 0; i < allClasses.length; i++) {
+        $("#securityIndicator").removeClass("has-background-"+allClasses[i]);
+        $("#strengthIcon").removeClass("icon-"+allClasses[i])
+      } 
+      switch(passwordRank) {
+        case 1:
+          $("#securityIndicator").addClass("has-background-insecure");
+          //Update label and colour
+          $("#strengthLabel").text("Insecure");
+          //Update icon
+          $("#strengthIcon").addClass("icon-insecure");
+          break;
+        case 2:
+          $("#securityIndicator").addClass("has-background-average");
+          //Update label and colour
+          $("#strengthLabel").text("Medium");
+          $("#strengthIcon").addClass("icon-average");
+          break;
+        default:
+          $("#securityIndicator").addClass("has-background-secure");
+          //Update label and colour
+          $("#strengthLabel").text("Secure");
+          $("#strengthIcon").addClass("icon-secure");
+      } 
+    }
+
+    //Check if password is a common one
+    function isPasswordCommon(password){
+      for (var i = 0; i < commonPasswords.length; i++) {
+        //Collect password info
+        var inList=commonPasswords[i]["password"].toUpperCase();
+        var onscreen=password.toUpperCase();
+        if(onscreen.includes(inList)){
+          return true;
+        }
+      }
+      return 
+    }
+
+    //Update the labels etc given the password
+    function rankAndUpdate(password){
+      var timeToCrack = estimateTime(password)
+      $("#crackTimeLabel").text("Time to crack: "+convertTime(timeToCrack));
+      //Check if password is common
+      if (isPasswordCommon(password)){
+        $("#crackTimeLabel").text("Time to crack: Instant (Common Password)");
+        updateColours(1)
+      }else{
+        //Update colours
+        updateColours(rankPassword(timeToCrack));
+      }
+      
+    }
+
+
+
+>>>>>>> Stashed changes
     /* =================== B I N D I N G S ==================== */
 
     
@@ -173,6 +347,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     //JAVASCRIPT FIRST CALLS
     $( document ).ready(function() {
        getSliderAndUpdate(); 
+
     });
 
 
