@@ -66,7 +66,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             </div>
             <!--Button 2 -->
             <div class="level-item">
-              <button class="button is-medium">
+              <button id="generate_word" class="button is-medium">
                 <span class="icon is-small">
                   <i class="fas fa-sync-alt"></i>
                 </span>
@@ -83,5 +83,101 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <? include_once include_local_file("/includes/footer.php");?>
   <!--Scripts-->
   <script src="/assets/scripts/password.js"></script>
+  <script type="text/javascript">
+
+    //Take the json data and create a words object
+    function create_word(letter,jsonData){
+      //Create the words object
+      let newWord = new words(letter,[])
+      //Filter json data and add words to words object
+      for(var i in jsonData){
+        newWord.addWord(jsonData[i]["word"])
+      }
+
+      return newWord
+    }
+
+    //Function to pick random item from list
+    function randomItem (myArray) {
+      return myArray[Math.floor(Math.random()*myArray.length)];
+    }
+
+    /*
+     * Class to organise word types of a language, i.e verbs nouns etc
+     * letter: The letter to represent this word type
+     * wordList: The list of words of this type
+     */
+    class words{
+      constructor(letter, wordList) {
+        this.letter = letter;
+        this.wordList = wordList;
+      }
+      //Add a word to the list
+      addWord(word){
+        this.wordList.push(word)
+      }
+    }
+
+    /*
+     *Class to organise language
+     * grammar: The accepted grammar order
+     * allWords: A list of all the words classes
+     */
+    class language{
+      constructor(grammar,allWords){
+        this.grammar=grammar
+        this.allWords=allWords
+      }
+      
+      //Generate a random string from the grammar
+      randomSentence(){
+        return this.convertSentence(randomItem(this.grammar))
+      }
+      
+      //Given a input string, generate a sentence
+      convertSentence(myString){
+        if (myString.length > 1){
+          return this.convertSentence(myString.slice(0,1)) + "_" + this.convertSentence(myString.slice(1))
+        }else{
+          for (var i=0; i < this.allWords.length; i++) {
+            var currentWords=this.allWords[i]
+            if (currentWords.letter.toUpperCase() == myString.toUpperCase()){
+              return randomItem(currentWords.wordList)
+            }
+          }
+        }
+      }
+    }
+
+    //Will update the screen with a new word
+    function regenerate_word(){
+      $("#passwordView").text(myLanguage.randomSentence());
+    }
+
+    //When the regenerate button is clicked
+    $( "#generate_word" ).click(function() {
+      regenerate_word();
+    });
+
+
+    //Get json objects from database
+    var verbs=<?php echo json_encode(get_verbs($pdo))?>;
+    var adjectives=<?php echo json_encode(get_adjectives($pdo))?>;
+    var nouns=<?php echo json_encode(get_nouns($pdo))?>;
+    var participles=<?php echo json_encode(get_participles($pdo))?>;
+    //Create our language
+    var myLanguage = new language(["APN","AVN","PNN","PVN"],
+      [create_word("V",verbs),create_word("A",adjectives),create_word("N",nouns),create_word("P",participles)])
+
+    //JAVASCRIPT FIRST CALLS
+    $( document ).ready(function() {
+       //Update our label
+       regenerate_word();
+    });
+
+    
+
+
+  </script>
 </body>
 </html>

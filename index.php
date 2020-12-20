@@ -163,28 +163,12 @@ include_once include_private_file("/core/public_functions/public_functions.php")
      * Function will get the current value
      * of the slider and generate a password
      */
-
     function getSliderAndUpdate(){
       var val = document.getElementById("lengthSlider").value
       update(val);
     }
 
-
-    function randomArrayShuffle(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-      while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-      return array;
-    }
-
-
-
-
+   
     /*
      * Function will generate a swear word password
      */
