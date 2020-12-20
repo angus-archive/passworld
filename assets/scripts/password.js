@@ -27,52 +27,24 @@ function convertLeet(text){
   return returnString;
 }
 
-/*
- * Will return a randomly shuffled array
- */
-function randomArrayShuffle(array) {
-  array.sort(() => Math.random() - 0.5);
-}
-
-
 
 
 /*
- * Will generate the complex password
- */
-function generate(length){
-  var password="";
-
-  //Set of parameters to use
-  masterSet=[]
-  allSet=[["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz","letCheck"],
-    ["0123456789","numCheck"],[";!£$&'#,?{}[]()+=*<>~","symCheck"]]
-  //Filter into master set (only add characters based on checkboxes)
-  for (var i = 0; i < allSet.length; i++) {
-    if (checkSet(allSet[i][1])){
-      masterSet.push(allSet[i])
-    }
-  }
-  //Create a master string to pick randomly from
-  masterString=createSet(masterSet,length).split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
-  return masterString
-}
-
-/*
- * Function will all the characters for the password in an equal amount      
+ * Function will return all the characters for the password in an equal amount      
  */
 function createSet(paramList,length){
   var masterString = "";
   let numberOfParams = paramList.length;
   //Calculate set size for each param
   let setSize = Math.floor(length/numberOfParams);  
-  let finalSetSize = length-((numberOfParams-1)*setSize);
+  let finalSetSize = length-(setSize*(numberOfParams-1))
+  //console.log("Using number of params: "+numberOfParams+" and a length of "+length+" our set size is "+setSize+" and our final set size is "+finalSetSize)
   //Go through each parameter
   for (var i = 0; i < numberOfParams; i++) {
     var currentSet = paramList[i]
     //Calculate amount of chars to use
     numberOfChars=setSize;
-    if (i < numberOfParams-1){
+    if (i >= numberOfParams-1){
       numberOfChars=finalSetSize;
     }
     //Randomly pick this amount of chars and add it to masterString

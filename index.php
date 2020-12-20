@@ -153,11 +153,15 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <script src="/assets/scripts/password.js"></script>
   <script type="text/javascript">
     
-    //Setup initial variables
-    var commonPasswords=<?php echo json_encode(get_all_common_passwords($pdo))?>;
-    var swear_words=<?php echo json_encode(get_swear_words($pdo))?>;
-    var leetDict = {"E":"3","I":"1","O":"0"}
-    $("#swearCheck").prop("checked", false);
+
+    //Convert json to array (target = column name in database)
+    function normaliseWords(target,jsonData){
+      if (jsonData.length > 1){
+        return normaliseWords(target,jsonData.slice(0,1)).concat(normaliseWords(target,jsonData.slice(1)))
+      }else{
+        return [jsonData[0][target]]
+      }
+    }
 
     /*
      * Function will get the current value
@@ -168,31 +172,43 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       update(val);
     }
 
+    /*
+     * Will return a randomly shuffled array
+     */
+    function randomArrayShuffle(array) {
+      array.sort(() => Math.random() - 0.5);
+    }
+
+    //Return the length of smallest item in array
+    function smallestLengthArray(arr){
+      return Math.min.apply(Math, arr.map(function(str) { return str.length; }));
+    }
+
+
    
     /*
      * Function will generate a swear word password
      */
     function generateSwearWord(length){
-      //Calculate padding
-      paddingSpace=length/2
       //Choose a swear word
-      chosenWord="hello"
+      chosenWord=""
       randomArrayShuffle(swear_words)
       for (var i = 0; i < swear_words.length; i++) {
-        currentSwear=swear_words[i]["word"]
-        if (currentSwear.length <= (length / 2)){
-          console.log(currentSwear);
+        currentSwear=swear_words[i]
+        if (currentSwear.length <= Math.ceil(length / 2)){
           chosenWord=currentSwear;
           break
         }
       }
+      //Calculate padding after choosing word
+      paddingLeftSpace=Math.floor((length-chosenWord.length)/2)
+      paddingRightSpace=length-(chosenWord.length+paddingLeftSpace)
       //Create padding
-      paddingLeft=generate(paddingSpace,skip=true)
-      paddingRight=generate(paddingSpace,skip=true)
+      paddingLeft=generate(paddingLeftSpace,skip=true)
+      paddingRight=generate(paddingRightSpace,skip=true)
       //Create Leet
       middle=(chosenWord);
       whole=paddingLeft+middle+paddingRight
-      console.log(whole)
       return whole
 
     }
@@ -203,6 +219,16 @@ include_once include_private_file("/core/public_functions/public_functions.php")
      * as well as updating the correct labels
      */
     function update(length){
+
+      //Disable explicit slider if no passwords are possible
+      if (length < (smallestSwear+2*Math.floor(smallestSwear/2))){
+        $("#swearCheck").attr("disabled", true);
+        $("#swearCheck").prop("checked", false);
+      }else{
+        $("#swearCheck").attr("disabled", false);        
+      }
+
+
       //Update the password label with a generated password
       password=generate(length);
       $("#passwordView").val(password);
@@ -236,7 +262,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         }
       }
       //Create a master string to pick randomly from
-      masterString=createSet(masterSet,length).split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
+      masterString=createSet(masterSet,length)//.split('').sort(function(){return 0.5-Math.random()}).join(''); //Shuffle the password
       return masterString
     }
 
@@ -278,7 +304,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     function isPasswordCommon(password){
       for (var i = 0; i < commonPasswords.length; i++) {
         //Collect password info
-        var inList=commonPasswords[i]["password"].toUpperCase();
+        var inList=commonPasswords[i].toUpperCase();
         var onscreen=password.toUpperCase();
         if(onscreen == (inList)){
           return true;
@@ -383,6 +409,15 @@ include_once include_private_file("/core/public_functions/public_functions.php")
        getSliderAndUpdate(); 
 
     });
+
+    //Setup initial variables
+    var commonPasswords=normaliseWords("password",<?php echo json_encode(get_all_common_passwords($pdo))?>);
+    var swear_words=normaliseWords("word",<?php echo json_encode(get_swear_words($pdo))?>);
+    var leetDict = {"E":"3","I":"1","O":"0"}
+    var smallestSwear=smallestLengthArray(swear_words)
+    
+    $("#swearCheck").prop("checked", false);
+
 
 
   </script>
