@@ -48,6 +48,10 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       display: block;
     }
 
+    .levelFull label{
+      width: 75%;
+    }
+
   </style> 
 </head>
 <body>
@@ -111,28 +115,28 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           <fieldset id="passwordParameters">
             <div class="level">
                 <!--Numbers-->
-                <div class="level-item core">
+                <div class="level-item core levelFull">
                   <label aria-label="Include Numbers in password" class="checkContainer has-text-centered">Numbers
                     <input id="numCheck" type="checkbox" checked="checked">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Letters-->
-                <div class="level-item core">
+                <div class="level-item core levelFull">
                   <label aria-label="Include Letters in password" class="checkContainer has-text-centered">Letters
                     <input id="letCheck" type="checkbox" checked="checked">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Symbols-->
-                <div class="level-item core">
+                <div class="level-item core levelFull">
                   <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div> 
                 <!--Rude-->
-                <div class="level-item">
+                <div class="level-item levelFull">
                   <label aria-label="Make password explicit" class="checkContainer has-text-centered">Rude
                     <input id="swearCheck" type="checkbox" checked="false">
                     <span aria-checked='true' class="checkmark"></span>
