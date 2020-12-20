@@ -63,8 +63,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
       <!--Title and subtitle-->
       <div class="has-text-centered mb-5">
-        <h1 class="title is-1">Generate a strong password</h1>
-        <h3 class="subtitle">Use one of our randomly generated passwords</h3>
+        <h1 class="title is-size-1-tablet is-size-3">Generate a strong password</h1>
+        <h3 class="subtitle is-size-5-tablet is-size-6">Use one of our randomly generated passwords</h3>
       </div>
 
       <!--Password Generator Columns-->

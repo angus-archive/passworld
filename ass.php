@@ -37,8 +37,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
       <!--Title and subtitle-->
       <div class="has-text-centered mb-5">
-        <h1 class="title is-1">a$$word</h1>
-        <h2 class="subtitle">Generate a rude memorable password</h3>
+        <h1 class="title is-size-1-tablet is-size-3">a$$word</h1>
+        <h3 class="subtitle is-size-5-tablet is-size-6">Generate a strong rude password</h3>
       </div>
 
       <!--Password Generator Columns-->
@@ -48,7 +48,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         <div class="columns is-multiline is-vcentered">
           <!--Password label section-->
           <div class="column is-12 has-text-centered">
-            <h2 id="passwordView" class="is-size-3 has-text-light">hello_world_one</h2>
+            <h2 id="passwordView" class="is-size-3-tablet is-size-5 has-text-light">hello_world_one</h2>
           </div>
         </div>
         </div>
