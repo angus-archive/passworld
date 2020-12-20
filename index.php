@@ -225,7 +225,10 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         $("#swearCheck").attr("disabled", true);
         $("#swearCheck").prop("checked", false);
       }else{
-        $("#swearCheck").attr("disabled", false);        
+        $("#swearCheck").attr("disabled", false);
+        if(wasExplicitOn){
+          $("#swearCheck").prop("checked", true);
+        }       
       }
 
 
@@ -369,6 +372,15 @@ include_once include_private_file("/core/public_functions/public_functions.php")
      * Binding when a checkbox is clicked
      */
     $('#passwordParameters .checkContainer input').change(function() {
+
+      //If it's the explcit checkbox, update globals
+      if(this.id == "swearCheck"){
+        if(this.checked){
+          wasExplicitOn=true
+        }else{
+          wasExplicitOn=false
+        }
+      }
       //If it's currently disabled then simply enable it
       if (this.checked){
         $(this).prop("checked", true);
@@ -387,6 +399,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         $(this).prop("checked", true);
       }  
     });
+
 
 
     //Whenever slider is moved
@@ -414,7 +427,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     var commonPasswords=normaliseWords("password",<?php echo json_encode(get_all_common_passwords($pdo))?>);
     var swear_words=normaliseWords("word",<?php echo json_encode(get_swear_words($pdo))?>);
     var leetDict = {"E":"3","I":"1","O":"0"}
-    var smallestSwear=smallestLengthArray(swear_words)
+    var smallestSwear=smallestLengthArray(swear_words) //Shortest swear word
+    var wasExplicitOn=false //Did the user turn on the explicit mode
     
     $("#swearCheck").prop("checked", false);
 
