@@ -28,6 +28,15 @@ include_once include_local_file("/includes/a_config.php");
       </div>
     </section>
 
+    <div class="has-text-centered p-5">
+      <a class="button is-medium is-bluey" target="_" href="https://github.com/angusgoody/passworld">
+        <span class="icon is-medium">
+          <i class="fab fa-github"></i>
+        </span>
+        <span>GitHub</span>
+      </a>
+    </div>
+
   </div>
   <!-- Footer -->
   <? include_once include_local_file("/includes/footer.php");?>
