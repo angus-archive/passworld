@@ -55,6 +55,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         <!--Customise Section (WHITE)-->
         <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3"> 
           <div class="level">
+            <?/*
             <!--Button 1 -->
             <div class="level-item">
               <button class="button is-medium">
@@ -64,6 +65,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                 <span>Copy</span>
               </button>
             </div>
+            */
+            ?>
             <!--Button 2 -->
             <div class="level-item">
               <button id="generate_word" class="button is-medium">
@@ -85,22 +88,8 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <script src="/assets/scripts/password.js"></script>
   <script type="text/javascript">
 
-    //Take the json data and create a words object
-    function create_word(letter,jsonData){
-      //Create the words object
-      let newWord = new words(letter,[])
-      //Filter json data and add words to words object
-      for(var i in jsonData){
-        newWord.addWord(jsonData[i]["word"])
-      }
 
-      return newWord
-    }
-
-    //Function to pick random item from list
-    function randomItem (myArray) {
-      return myArray[Math.floor(Math.random()*myArray.length)];
-    }
+    /* =================== C L A S S E S ==================== */
 
     /*
      * Class to organise word types of a language, i.e verbs nouns etc
@@ -148,6 +137,24 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         }
       }
     }
+
+    //Function to pick random item from list
+    function randomItem (myArray) {
+      return myArray[Math.floor(Math.random()*myArray.length)];
+    }
+    
+    //Take the json data and create a words object
+    function create_word(letter,jsonData){
+      //Create the words object
+      let newWord = new words(letter,[])
+      //Filter json data and add words to words object
+      for(var i in jsonData){
+        newWord.addWord(jsonData[i]["word"])
+      }
+
+      return newWord
+    }
+
 
     //Will update the screen with a new word
     function regenerate_word(){

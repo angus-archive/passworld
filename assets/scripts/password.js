@@ -5,65 +5,11 @@
 */
 
 
-/* =================== C L A S S E S ==================== */
-
-/*
- * Class to organise word types of a language, i.e verbs nouns etc
- * letter: The letter to represent this word type
- * wordList: The list of words of this type
- */
-class words{
-  constructor(letter, wordList) {
-    this.letter = letter;
-    this.wordList = wordList;
-  }
-  //Add a word to the list
-  addWord(word){
-    this.wordList.push(word)
-  }
-}
-
-/*
- *Class to organise language
- * grammar: The accepted grammar order
- * allWords: A list of all the words classes
- */
-class language{
-  constructor(grammar,allWords){
-    this.grammar=grammar
-    this.allWords=allWords
-  }
-  
-  //Generate a random string from the grammar
-  randomSentence(){
-    return this.convertSentence(randomItem(this.grammar))
-  }
-  
-  //Given a input string, generate a sentence
-  convertSentence(myString){
-    if (myString.length > 1){
-      return this.convertSentence(myString.slice(0,1)) + "_" + this.convertSentence(myString.slice(1))
-    }else{
-      for (var i=0; i < this.allWords.length; i++) {
-        var currentWords=this.allWords[i]
-        if (currentWords.letter.toUpperCase() == myString.toUpperCase()){
-          return randomItem(currentWords.wordList)
-        }
-      }
-    }
-  }
-}
-
-
-
 
 
 /* =================== F U N C T I O N S ==================== */
 
-//Function to pick random item from list
-function randomItem (myArray) {
-  return myArray[Math.floor(Math.random()*myArray.length)];
-}
+
 
 
 //Convert text into Leet speak
