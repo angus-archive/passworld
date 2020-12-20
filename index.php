@@ -110,29 +110,28 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           <!--Customise controls-->
           <fieldset id="passwordParameters">
             <div class="level">
-              
                 <!--Numbers-->
-                <div class="level-item">
+                <div class="level-item core">
                   <label aria-label="Include Numbers in password" class="checkContainer has-text-centered">Numbers
                     <input id="numCheck" type="checkbox" checked="checked">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Letters-->
-                <div class="level-item">
+                <div class="level-item core">
                   <label aria-label="Include Letters in password" class="checkContainer has-text-centered">Letters
                     <input id="letCheck" type="checkbox" checked="checked">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div>
                 <!--Symbols-->
-                <div class="level-item">
+                <div class="level-item core">
                   <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
                     <input id="symCheck" type="checkbox" checked="checked">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
                 </div> 
-                <!--Symbols-->
+                <!--Rude-->
                 <div class="level-item">
                   <label aria-label="Make password explicit" class="checkContainer has-text-centered">Rude
                     <input id="swearCheck" type="checkbox" checked="false">
@@ -379,7 +378,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
         getSliderAndUpdate();
       }
       //Check at least 2 checkboxes are selected
-      else if ($('#passwordParameters .checkContainer input:checked').length >= 1){
+      else if ($('#passwordParameters .core .checkContainer input:checked').length >= 1){
         //Disable the checkbox
         $(this).prop("checked", false);
         //Regenerate when disabled
