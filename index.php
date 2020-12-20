@@ -134,7 +134,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
                 </div> 
                 <!--Symbols-->
                 <div class="level-item">
-                  <label aria-label="Make password explicit" class="checkContainer has-text-centered">Explicit
+                  <label aria-label="Make password explicit" class="checkContainer has-text-centered">Rude
                     <input id="swearCheck" type="checkbox" checked="false">
                     <span aria-checked='true' class="checkmark"></span>
                   </label>
@@ -183,8 +183,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
     function smallestLengthArray(arr){
       return Math.min.apply(Math, arr.map(function(str) { return str.length; }));
     }
-
-
    
     /*
      * Function will generate a swear word password
@@ -213,7 +211,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 
     }
 
-  
     /*
      * Will generate the complex password
      * as well as updating the correct labels
@@ -240,7 +237,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       $("#lengthLabel").text(lengthContent);
       rankAndUpdate(password);
     }
-
 
     /*
      * Will generate the complex password
@@ -331,8 +327,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       
     }
 
-
-
     /* =================== B I N D I N G S ==================== */
 
 
@@ -348,7 +342,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       //Update
       rankAndUpdate("");
     });
-
     
     /* Function will copy password to clipboard*/
     $( "#copyButton" ).click(function() {
@@ -364,8 +357,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
           .animate({
               opacity: 1
           }, 500);
-
-
     });
 
     /*
@@ -400,8 +391,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       }  
     });
 
-
-
     //Whenever slider is moved
     $("#lengthSlider").on("input change", function() {
       //Get the slider value
@@ -409,8 +398,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
       //Update
       update(value);
     });
-
-
 
     $( "#refresh" ).click(function() {
       getSliderAndUpdate();

@@ -9,9 +9,6 @@
 
 /* =================== F U N C T I O N S ==================== */
 
-
-
-
 //Convert text into Leet speak
 function convertLeet(text){
   returnString="";
@@ -26,7 +23,6 @@ function convertLeet(text){
 
   return returnString;
 }
-
 
 
 /*
@@ -66,8 +62,6 @@ function checkSet(widgetID){
   }
   return false;
 }
-
-
 
 /*
  * Function will rank a generated password
