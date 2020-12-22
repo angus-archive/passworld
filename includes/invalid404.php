@@ -25,7 +25,7 @@ include_once include_local_file("/includes/a_config.php");
 	  </div>
 	</section>
 	<div id="wrapper" class="has-text-centered mt-5">
-		<h3 class="title is-3">404 - Page not found</h3>
+		<h3 class="title is-3">404 - Page not found bruh</h3>
 		<h2 class="subtitle is-6">The page you are looking for does not exist</h2>
 		<a href="/" class="button is-rounded is-primary">Home</a>
 	</div>
