@@ -11688,10 +11688,16 @@ body {
   border-radius: 3px;
 }
 
-.navbar-item .activeNavLink {
-  color: #00A08A;
-}
+@media only screen and (min-width: 1024px) {
+  .navbar-menu .navbar-item {
+    border-bottom: 2px solid white;
+  }
 
+  .navbar-menu .activeNavLink {
+    color: #00A08A !important;
+    border-bottom: 2px solid #919191;
+  }
+}
 /*
 ####################################################
 C H E C K   B O X
