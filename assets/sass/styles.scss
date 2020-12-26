@@ -62,6 +62,54 @@ C U S T O M
 ####################################################
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
+
+#passwordView{
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-x: scroll;
+  font-family: 'Cousine', monospace; border: 0;
+  background: transparent;
+}
+
+.icon-insecure{
+  background: url('/assets/images/icons/insecure.svg');
+  height: 20px;
+  width: 20px;
+  display: block;
+}
+
+.icon-average{
+  background: url('/assets/images/icons/average.svg');
+  height: 20px;
+  width: 20px;
+  display: block;
+}
+
+.icon-secure{
+    background: url('/assets/images/icons/secure.svg');
+    height: 20px;
+    width: 20px;
+    display: block;
+  }
+
+.levelFull label{
+  width: 75%;
+}
+
+.has-code-font{
+  font-family: 'Roboto Mono', monospace;
+}
+
+
+/*
+####################################################
+U T I L I T Y
+####################################################
+*/
+
 body {
   display: flex;
   min-height: 100vh;

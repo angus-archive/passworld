@@ -13,19 +13,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 <head>
   <!-- Head tags -->
   <? include_once include_local_file("/includes/head-tags.php");?>
-  <!--Custom CSS-->
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
-
-  #passwordView{
-    white-space: nowrap;
-    overflow: hidden;
-    overflow-x: scroll;
-    font-family: 'Cousine', monospace; border: 0;
-  }
-
-  </style>
 
 </head>
 <body>
@@ -35,49 +22,44 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <div id="wrapper" class="has-background-background">
     <div class="container section">
 
-      <!--Title and subtitle-->
-      <div class="has-text-centered mb-5">
-        <h1 class="title is-size-1-tablet is-size-3">a$$word</h1>
-        <h3 class="subtitle is-size-5-tablet is-size-6">Generate a strong rude password</h3>
-      </div>
-
       <!--Password Generator Columns-->
       <div class="columns is-multiline is-centered is-tablet mt-5">
-        <!--Generated password label (GREEN) -->
-        <div id="securityIndicator" class="column is-12-tablet is-10-desktop is-centered border3" style="background-color: #436291">
-        <div class="columns is-multiline is-vcentered">
-          <!--Password label section-->
-          <div class="column is-12 has-text-centered">
-            <h2 id="passwordView" class="is-size-3-tablet is-size-5 has-text-light">hello_world_one</h2>
+        <!--Main container column-->
+        <div class="column is-12-tablet is-10-desktop is-centered">
+          <!--Title and subtitle-->
+          <div class="has-text-left-desktop has-text-centered mb-5">
+            <h1 class="title is-size-1-tablet is-size-3">a$$word</h1>
+            <h3 class="subtitle is-size-5-tablet is-size-6">Generate a strong rude password</h3>
+            <hr>
           </div>
-        </div>
-        </div>
-        <!--Customise Section (WHITE)-->
-        <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3"> 
-          <div class="level">
-            <?/*
-            <!--Button 1 -->
-            <div class="level-item">
-              <button class="button is-medium">
-                <span class="icon is-small">
-                  <i class="far fa-copy"></i>
-                </span>
-                <span>Copy</span>
-              </button>
-            </div>
-            */
-            ?>
-            <!--Button 2 -->
-            <div class="level-item">
-              <button id="generate_word" class="button is-medium">
-                <span class="icon is-small">
-                  <i class="fas fa-sync-alt"></i>
-                </span>
-                <span>Generate</span>
-              </button>
+          <!--Generated password label -->
+          <div id="securityIndicator" class="column is-12 border3" style="background-color: #436291">
+            <div class="columns is-multiline is-vcentered">
+              <!--Password label section-->
+              <div class="column is-12 has-text-centered">
+                <h2 id="passwordView" class="is-size-3-tablet is-size-5 has-text-light">hello_world_one</h2>
+              </div>
             </div>
           </div>
+
+          <!--Customise Section (WHITE)-->
+          <div class="mt-5 column is-12 has-background-light border3 has-code-font"> 
+            <div class="level">
+              <!--Button 1 -->
+              <div class="level-item">
+                <button id="generate_word" class="button is-medium">
+                  <span class="icon is-small">
+                    <i class="fas fa-sync-alt"></i>
+                  </span>
+                  <span>Generate</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
         </div>
+
       </div>
 
     </div>

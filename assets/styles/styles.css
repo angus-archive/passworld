@@ -6,6 +6,8 @@ B U L M A
 */
 /*! bulma.io v0.9.1 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
+@import url("https://fonts.googleapis.com/css2?family=Cousine&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 @keyframes spinAround {
   from {
     transform: rotate(0deg);
@@ -11656,6 +11658,49 @@ U T I L I T Y
 /*
 ####################################################
 C U S T O M
+####################################################
+*/
+#passwordView {
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-x: scroll;
+  font-family: "Cousine", monospace;
+  border: 0;
+  background: transparent;
+}
+
+.icon-insecure {
+  background: url("/assets/images/icons/insecure.svg");
+  height: 20px;
+  width: 20px;
+  display: block;
+}
+
+.icon-average {
+  background: url("/assets/images/icons/average.svg");
+  height: 20px;
+  width: 20px;
+  display: block;
+}
+
+.icon-secure {
+  background: url("/assets/images/icons/secure.svg");
+  height: 20px;
+  width: 20px;
+  display: block;
+}
+
+.levelFull label {
+  width: 75%;
+}
+
+.has-code-font {
+  font-family: "Roboto Mono", monospace;
+}
+
+/*
+####################################################
+U T I L I T Y
 ####################################################
 */
 body {

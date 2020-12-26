@@ -9,8 +9,9 @@ include_once include_private_file("/core/public_functions/connect-to-database.ph
 include_once include_private_file("/core/public_functions/public_functions.php");
 
 //Initial password offset (How many appear at first)
-$initialOffset=50;
+$initialOffset=250;
 $all_passwords=get_all_common_passwords($pdo);
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="">
@@ -24,47 +25,50 @@ $all_passwords=get_all_common_passwords($pdo);
   <!-- Content -->
   <div id="wrapper" class="has-background-background">
     <div class="container section">
-      <!--Title and subtitle-->
-      <div class="has-text-centered mb-5">
-        <h1 class="title is-1">Common Passwords</h1>
-        <h3 class="subtitle">View a list of the 1000 most common passwords</h3>
-      </div>
-
       <!--Main View-->
       <div class="columns is-multiline is-centered is-tablet mt-5">
-        <div class="column is-12-tablet is-10-desktop is-centered has-background-light border3">
-          <!--Search-->
-          <div class="field is-grouped px-3 py-2">
-            <p class="control has-icons-left is-expanded">
-              <input id="searchBar"class="input" type="text" placeholder="Search">
-              <span class="icon is-left">
-                <i class="fas fa-search" aria-hidden="true"></i>
-              </span>
-            </p>
-            <p class="control">
-              <button aria-label="Clear search" id="clearButton" class="button is-danger" style="display: none">Clear</button>
-            </p>
+        <!-- Master container -->
+        <div class="column is-12-tablet is-10-desktop is-centered">
+          <!--Title and subtitle-->
+          <div class="has-text-left-desktop has-text-centered mb-5">
+            <h1 class="title is-size-1-tablet is-size-3">Common Passwords</h1>
+            <h3 class="subtitle is-size-5-tablet is-size-6">View a list of the 1000 most common passwords</h3>
+            <hr>
           </div>
-          <!--Number of results-->
-          <div class="has-text-centered py-1">
-            <p><b id="resultsLabel"><?=sizeof($all_passwords)?></b> results</p>
-          </div>
-          <!--View passwords-->
-          <div id="moreBlock">
-            <? for ($i = 0; $i < $initialOffset; $i++):?>
-            <? $password = $all_passwords[$i]?>
-            <div class="panel-block">
-                <h6 class="subtitle is-6"><b><?=$password["password_id"]?>:</b>&nbsp
-                <?=$password["password"]?></h6>
+          <!--Common passwords-->
+          <div class="column is-12 has-background-light border3">
+            <!--Search-->
+            <div class="field is-grouped px-3 py-2">
+              <p class="control has-icons-left is-expanded">
+                <input id="searchBar"class="input" type="text" placeholder="Search">
+                <span class="icon is-left">
+                  <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+              </p>
+              <p class="control">
+                <button aria-label="Clear search" id="clearButton" class="button is-danger" style="display: none">Clear</button>
+              </p>
             </div>
-            <? endfor; ?>
+            <!--Number of results-->
+            <div class="has-text-centered py-1">
+              <p><b id="resultsLabel"><?=sizeof($all_passwords)?></b> results</p>
+            </div>
+            <!--View passwords-->
+            <div id="moreBlock">
+              <? for ($i = 0; $i < $initialOffset; $i++):?>
+              <? $password = $all_passwords[$i]?>
+              <div class="panel-block">
+                  <h6 class="subtitle is-6"><b><?=$password["password_id"]?>:</b>&nbsp
+                  <?=$password["password"]?></h6>
+              </div>
+              <? endfor; ?>
+            </div>
+            <div class="panel-block" id="buttonBlock">
+              <button id="loadMore" class="button is-link is-outlined is-fullwidth">
+                Load More..
+              </button>
+            </div>
           </div>
-          <div class="panel-block" id="buttonBlock">
-            <button id="loadMore" class="button is-link is-outlined is-fullwidth">
-              Load More..
-            </button>
-          </div>
-
         </div>
       </div>
     </div>
@@ -82,7 +86,7 @@ $all_passwords=get_all_common_passwords($pdo);
     var passwordBucket=[];
     var isSearch = false;
     var offset=parseInt(<?php echo $initialOffset ?>);
-    var passwordLimit = 50;
+    var passwordLimit = parseInt(<?php echo $initialOffset ?>);
 
     //setup before functions
     var typingTimer;                //timer identifier

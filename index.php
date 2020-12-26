@@ -13,46 +13,6 @@ include_once include_private_file("/core/public_functions/public_functions.php")
 <head>
   <!-- Head tags -->
   <? include_once include_local_file("/includes/head-tags.php");?>
-  <!--Custom CSS-->
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cousine&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
-
-
-  #passwordView{
-    white-space: nowrap;
-    overflow: hidden;
-    overflow-x: scroll;
-    font-family: 'Cousine', monospace; border: 0;
-    background: transparent;
-  }
-
-  .icon-insecure{
-    background: url('/assets/images/icons/insecure.svg');
-    height: 20px;
-    width: 20px;
-    display: block;
-  }
-
-  .icon-average{
-    background: url('/assets/images/icons/average.svg');
-    height: 20px;
-    width: 20px;
-    display: block;
-  }
-
-  .icon-secure{
-      background: url('/assets/images/icons/secure.svg');
-      height: 20px;
-      width: 20px;
-      display: block;
-    }
-
-    .levelFull label{
-      width: 75%;
-    }
-
-  </style> 
 </head>
 <body>
   <!-- Navbar -->
@@ -60,94 +20,95 @@ include_once include_private_file("/core/public_functions/public_functions.php")
   <!-- Content -->
   <div id="wrapper" class="has-background-background">
     <div class="container section">
-
-      <!--Title and subtitle-->
-      <div class="has-text-centered mb-5">
-        <h1 class="title is-size-1-tablet is-size-3">Generate a strong password</h1>
-        <h3 class="subtitle is-size-5-tablet is-size-6">Use one of our randomly generated passwords</h3>
-      </div>
-
       <!--Password Generator Columns-->
       <div class="columns is-multiline is-centered is-tablet mt-5">
-        <!--Generated password label (GREEN) -->
-        <div id="securityIndicator" class="column is-12-tablet is-10-desktop is-centered has-background-secure border3">
-          <div class="columns is-multiline is-vcentered">
-            <!--Password label section-->
-            <div class="column is-8 is-9-widescreen">
-              <div class="field is-grouped">
-                <p class="control is-expanded has-icons-left">
-                  <input id="passwordView"class="input is-medium has-text-light" type="text" placeholder="Password">
-                  <span class="icon is-medium is-left has-text-light">
-                      <i id="strengthIcon" class="low-icon"></i>
-                  </span>
-                </p>
+        <!--Main container column-->
+        <div class="column is-12-tablet is-10-desktop is-centered">
+          <!--Title and subtitle-->
+          <div class="has-text-left-desktop has-text-centered mb-5">
+            <h1 class="title is-size-1-tablet is-size-3">Generate a strong password</h1>
+            <h3 class="subtitle is-size-5-tablet is-size-6">Use one of our randomly generated passwords</h3>
+            <hr>
+          </div>
+          <!--Generated password label (GREEN) -->
+          <div id="securityIndicator" class="column is-12 border3">
+            <div class="columns is-multiline is-vcentered">
+              <!--Password label section-->
+              <div class="column is-8 is-9-widescreen">
+                <div class="field is-grouped">
+                  <p class="control is-expanded has-icons-left">
+                    <input id="passwordView"class="input is-medium has-text-light" type="text" spellcheck="false" placeholder="Password">
+                    <span class="icon is-medium is-left has-text-light">
+                        <i id="strengthIcon" class="low-icon"></i>
+                    </span>
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="column is-4 is-3-widescreen">
-              <div class="level is-mobile">
-                <div class="level-item">
-                  <button aria-label="clear password" id="clearButton" class="button"><span class="icon"><i class="fas fa-backspace"></i></span></button>
-                </div>
-                <div class="level-item">
-                  <button aria-label="copy password" id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
-                </div>
-                <div class="level-item">
-                  <button aria-label="regenerate password" id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+              <div class="column is-4 is-3-widescreen">
+                <div class="level is-mobile">
+                  <div class="level-item">
+                    <button aria-label="clear password" id="clearButton" class="button"><span class="icon"><i class="fas fa-backspace"></i></span></button>
+                  </div>
+                  <div class="level-item">
+                    <button aria-label="copy password" id="copyButton" class="button"><span class="icon"><i class="far fa-copy"></i></span></button>
+                  </div>
+                  <div class="level-item">
+                    <button aria-label="regenerate password" id="refresh" class="button"><span class="icon"><i class="fas fa-sync-alt"></i></span></button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--Customise Section (WHITE)-->
-        <div style="font-family: 'Roboto Mono', monospace;" class="mt-5 column is-12-tablet is-10-desktop is-centered has-background-light border3">
-          <!--Strength section-->
-          <h4 class="is-size-6 mb-1">Strength: <b><span id="strengthLabel">25</span></b></h4>
-          <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
-          <hr style="background-color: #E3E2E4">
-          <!--Length label-->
-          <label for="lengthSlider" id="lengthLabel" class="is-size-5 mb-1">Length: 25</label>
-          <!--Length Slider-->
-          <div class="slidecontainer">
-            <input id="lengthSlider" type="range" min="3" aria-valuemin="3" max="35" aria-valuemax="35" value="10" aria-valuenow="10" class="slider" style="width: 100%">
-          </div>
-          <br class="mt-4">
-          <!--Customise controls-->
-          <fieldset id="passwordParameters">
-            <div class="level">
-                <!--Numbers-->
-                <div class="level-item core levelFull">
-                  <label aria-label="Include Numbers in password" class="checkContainer has-text-centered">Numbers
-                    <input id="numCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true' class="checkmark"></span>
-                  </label>
-                </div>
-                <!--Letters-->
-                <div class="level-item core levelFull">
-                  <label aria-label="Include Letters in password" class="checkContainer has-text-centered">Letters
-                    <input id="letCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true' class="checkmark"></span>
-                  </label>
-                </div>
-                <!--Symbols-->
-                <div class="level-item core levelFull">
-                  <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
-                    <input id="symCheck" type="checkbox" checked="checked">
-                    <span aria-checked='true' class="checkmark"></span>
-                  </label>
-                </div> 
-                <!--Rude-->
-                <div class="level-item levelFull">
-                  <label aria-label="Make password explicit" class="checkContainer has-text-centered">Rude
-                    <input id="swearCheck" type="checkbox" checked="false">
-                    <span aria-checked='true' class="checkmark"></span>
-                  </label>
-                </div> 
-
+          <!--Customise Section (WHITE)-->
+          <div class="mt-5 column is-12 has-background-light border3 has-code-font">
+            <!--Strength section-->
+            <h4 class="is-size-6 mb-1">Strength: <b><span id="strengthLabel">25</span></b></h4>
+            <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
+            <hr style="background-color: #E3E2E4">
+            <!--Length label-->
+            <label for="lengthSlider" id="lengthLabel" class="is-size-5 mb-1">Length: 25</label>
+            <!--Length Slider-->
+            <div class="slidecontainer">
+              <input id="lengthSlider" type="range" min="3" aria-valuemin="3" max="35" aria-valuemax="35" value="10" aria-valuenow="10" class="slider" style="width: 100%">
             </div>
-          </fieldset>  
-        </div>
-      </div>
+            <br class="mt-4">
+            <!--Customise controls-->
+            <fieldset id="passwordParameters">
+              <div class="level">
+                  <!--Numbers-->
+                  <div class="level-item core levelFull">
+                    <label aria-label="Include Numbers in password" class="checkContainer has-text-centered">Numbers
+                      <input id="numCheck" type="checkbox" checked="checked">
+                      <span aria-checked='true' class="checkmark"></span>
+                    </label>
+                  </div>
+                  <!--Letters-->
+                  <div class="level-item core levelFull">
+                    <label aria-label="Include Letters in password" class="checkContainer has-text-centered">Letters
+                      <input id="letCheck" type="checkbox" checked="checked">
+                      <span aria-checked='true' class="checkmark"></span>
+                    </label>
+                  </div>
+                  <!--Symbols-->
+                  <div class="level-item core levelFull">
+                    <label aria-label="Include Symbols in password" class="checkContainer has-text-centered">Symbols
+                      <input id="symCheck" type="checkbox" checked="checked">
+                      <span aria-checked='true' class="checkmark"></span>
+                    </label>
+                  </div> 
+                  <!--Rude-->
+                  <div class="level-item levelFull">
+                    <label aria-label="Make password explicit" class="checkContainer has-text-centered">Rude
+                      <input id="swearCheck" type="checkbox" checked="false">
+                      <span aria-checked='true' class="checkmark"></span>
+                    </label>
+                  </div> 
 
+              </div>
+            </fieldset>  
+          </div>
+        </div>   
+      </div>      
     </div>
   </div>
   <!-- Footer -->
