@@ -11666,7 +11666,7 @@ C U S T O M
   overflow-x: scroll;
   font-family: "Cousine", monospace;
   border: 0;
-  background: transparent;
+  background: transparent !important;
 }
 
 .icon-insecure {

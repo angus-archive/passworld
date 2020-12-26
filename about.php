@@ -13,30 +13,35 @@ include_once include_local_file("/includes/a_config.php");
 <body>
   <!-- Navbar -->
   <? include_once include_local_file("/includes/navbar.php");?>
+
   <!-- Content -->
-  <div id="wrapper">
-    <section class="hero is-light">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <h1 class="title">
-            About Passworld
-          </h1>
-          <h2 class="subtitle">
-            A website about passwords
-          </h2>
+  <div id="wrapper" class="has-background-background">
+    <div class="container section">
+      <!--Master column-->
+      <div class="columns is-multiline is-centered is-tablet mt-5">
+        <!--Main container column-->
+        <div class="column is-12-tablet is-10-desktop is-centered">
+          <!--Title and subtitle-->
+          <div class="has-text-left-desktop has-text-centered mb-5">
+            <h1 class="title is-size-1-tablet is-size-3">About Passworld</h1>
+            <h3 class="subtitle is-size-5-tablet is-size-6">Find out about Passworld</h3>
+            <hr>
+          </div>
+
+          <div class="column">
+            <div class="has-text-centered p-5">
+              <a class="button is-medium is-bluey" target="_" href="https://github.com/angusgoody/passworld">
+                <span class="icon is-medium">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
         </div>
       </div>
-    </section>
-
-    <div class="has-text-centered p-5">
-      <a class="button is-medium is-bluey" target="_" href="https://github.com/angusgoody/passworld">
-        <span class="icon is-medium">
-          <i class="fab fa-github"></i>
-        </span>
-        <span>GitHub</span>
-      </a>
     </div>
-
   </div>
   <!-- Footer -->
   <? include_once include_local_file("/includes/footer.php");?>
