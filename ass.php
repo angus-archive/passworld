@@ -33,7 +33,7 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             <hr>
           </div>
           <!--Generated password label -->
-          <div id="securityIndicator" class="column is-12 border3" style="background-color: #436291">
+          <div id="securityIndicator" class="column is-12 border3 has-background-bluey">
             <div class="columns is-multiline is-vcentered">
               <!--Password label section-->
               <div class="column is-12 has-text-centered">
