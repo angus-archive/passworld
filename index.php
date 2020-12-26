@@ -66,12 +66,12 @@ include_once include_private_file("/core/public_functions/public_functions.php")
             <h4 id="crackTimeLabel" class="is-size-6 mb-1">Time to crack: ???</h4>
             <hr style="background-color: #E3E2E4">
             <!--Length label-->
-            <label for="lengthSlider" id="lengthLabel" class="is-size-5 mb-1">Length: 25</label>
+            <label for="lengthSlider" id="lengthLabel" class="is-size-5">Length: 25</label>
             <!--Length Slider-->
-            <div class="slidecontainer">
+            <div class="slidecontainer mt-2">
               <input id="lengthSlider" type="range" min="3" aria-valuemin="3" max="35" aria-valuemax="35" value="10" aria-valuenow="10" class="slider" style="width: 100%">
             </div>
-            <br class="mt-4">
+            <div class="py-5"></div>
             <!--Customise controls-->
             <fieldset id="passwordParameters">
               <div class="level">
