@@ -16,4 +16,17 @@ $(document).ready(function() {
       $(".navbar-menu").toggleClass("is-active");
 
   });
+
+  //Dismiss button for bulma notifications
+  $(".notification .delete").click(function(){
+    parent=$(this).parent();
+    parent.hide(250);
+  });
+
+  //Dismiss button for bulma messages
+  $(".message .delete").click(function(){
+    parent=$(this).parent().parent();
+    parent.hide(250);
+  });
+  
 });
