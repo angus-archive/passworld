@@ -27,7 +27,6 @@ include_once include_local_file("/includes/a_config.php");
             <h3 class="subtitle is-size-5-tablet is-size-6">Find out about Passworld</h3>
             <hr>
           </div>
-
           <div class="column">
             <div class="has-text-centered p-5">
               <a class="button is-medium is-bluey" target="_" href="https://github.com/angusgoody/passworld">
